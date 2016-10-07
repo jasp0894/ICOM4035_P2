@@ -35,16 +35,15 @@ public class CharDataReader implements DataReader {
 			lSB = 0x000000ff & b[index + i];
 			value = value | lSB; 
 		}
-		return String.valueOf(value).charAt(0);
-		
+		return String.valueOf(value).charAt(0);	
 	}
 	
 	@Override
 	public Object readDataFromInputScanner(Scanner input) {
 		String s = input.nextLine(); 
 		try {
-			short v = Short.parseShort(s); 
-			return new Short(v); 
+			char v = s.charAt(0); 
+			return new Character(v); 
 		} catch (Exception e) { 
 			return null; 
 		}
