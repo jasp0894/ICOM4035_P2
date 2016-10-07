@@ -13,7 +13,7 @@ import interfaces.DataWriter;
 public class LongDataWriter implements DataWriter {
 
 	private static final int LONGSIZE = Long.BYTES;
-	public static final LongDataWriter INSTACE = new LongDataWriter();
+	public static final LongDataWriter INSTANCE = new LongDataWriter();
 	/**
 	 * 
 	 */

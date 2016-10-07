@@ -13,7 +13,7 @@ import interfaces.DataWriter;
 public class DoubleDataWriter implements DataWriter {
 
 	private static final int DOUBLESIZE = Double.BYTES;
-	public static final DoubleDataWriter INSTACE = new DoubleDataWriter();
+	public static final DoubleDataWriter INSTANCE = new DoubleDataWriter();
 	/**
 	 * 
 	 */
