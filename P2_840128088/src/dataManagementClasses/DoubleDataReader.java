@@ -1,24 +1,24 @@
-/**
- * 
- */
 package dataManagementClasses;
-
 import java.util.Scanner;
 
 import interfaces.DataReader;
 
 /**
+ * 
+ */
+
+/**
  * @author J.A. Sanchez Perez
  *
  */
-public class LongDataReader implements DataReader {
+public class DoubleDataReader implements DataReader {
 
-	private static final int LONGSIZE = Long.BYTES;
-	public static final LongDataReader INSTANCE = new LongDataReader();
+	private static final int DOUBLESIZE = Double.BYTES;
+	public static final DoubleDataReader INSTANCE = new DoubleDataReader();
 	/**
 	 * 
 	 */
-	private LongDataReader() {
+	private DoubleDataReader() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -26,17 +26,17 @@ public class LongDataReader implements DataReader {
 	 * @see interfaces.DataReader#readDataFromArrayOfBytes(byte[], int)
 	 */
 	@Override
-	public Long readDataFromArrayOfBytes(byte[] a, int starting) {
+	public Double readDataFromArrayOfBytes(byte[] a, int starting) {
 		// TODO Auto-generated method stub
 		long value = 0;
-		int lSB =0;
-		for (int i = 0; i < LONGSIZE; i++) {
+		long lSB =0;
+		for (int i = 0; i < DOUBLESIZE; i++) {
 			value = value <<8;
 			lSB = 0x0000ff & a[starting +i];
 			value = value | lSB;
 		}
 		
-		return value;
+		return Double.longBitsToDouble(value);
 	}
 
 	/* (non-Javadoc)
@@ -48,11 +48,11 @@ public class LongDataReader implements DataReader {
 		String s = input.nextLine();
 		
 		try{
-			Long l = Long.parseLong(s);
-			return new Long(l);
+			return Double.parseDouble(s);
 		}catch(Exception e){
 			return null; //if the next line does not contain a LONG
 		}
 	}
+
 
 }

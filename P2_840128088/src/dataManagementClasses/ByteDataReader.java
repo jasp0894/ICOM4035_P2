@@ -33,8 +33,8 @@ public class ByteDataReader implements DataReader {
 		
 		try{
 			
-			return Byte.parseByte(s);
-			
+			Byte b = Byte.parseByte(s);
+			return new Byte(b);
 			
 		}catch(Exception e){
 			
