@@ -2,8 +2,6 @@ package dataManagementClasses;
 
 import java.util.Scanner;
 
-import com.sun.org.apache.xerces.internal.impl.dv.InvalidDateException;
-
 import generalUtilities.DataUtils;
 import interfaces.DataReader;
 
@@ -13,8 +11,15 @@ public class DateDataReader implements DataReader {
 	
 	private DateDataReader() {}; 
 
-	public Date readDataFromArrayOfBytes(byte[] b, int index) throws InvalidDateException {
-		return new Date(b[index], b[index+1], ShortDataReader.INSTANCE.readDataFromArrayOfBytes(b, index+2)); 
+	
+	public Date readDataFromArrayOfBytes(byte[] b, int index) {
+		try {
+			return new Date(b[index], b[index+1], ShortDataReader.INSTANCE.readDataFromArrayOfBytes(b, index+2));
+		} catch (InvalidDateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;// If date is not valid, then returns null;
+		} 
 	}
 
 	@Override

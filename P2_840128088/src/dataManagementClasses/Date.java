@@ -2,8 +2,6 @@ package dataManagementClasses;
 
 import generalUtilities.DataUtils;
 
-import com.sun.org.apache.xerces.internal.impl.dv.InvalidDateException;
-
 public class Date implements Comparable<Date> {
 	private static int NDAYSPERMONTH[] = {31, 28, 31, 30, 31, 30, 
 		                                  31, 31, 30, 31, 30, 31}; 
@@ -40,7 +38,7 @@ public class Date implements Comparable<Date> {
 	
 	public boolean equals(Object other) { 
 		if (other == null) return false; 
-		if (!(other instanceof Date)) return false; 
+		if (!(other instanceof Date)) return false; //check if the given child of Object is not of type Date
 		Date otherDate = (Date) other; 
 		return this.month == otherDate.month &&
 				this.day == otherDate.day &&

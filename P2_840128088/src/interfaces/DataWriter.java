@@ -1,6 +1,14 @@
 package interfaces;
 
+
+/**
+ *
+ * Specifies a new data type to write data in a particular array of bytes. 
+ * @author Pedro I. Rivera Vega
+ *
+ */
 public interface DataWriter {
+	
 	/**
 	 * Writes data value of a particular data type into an array of bytes. 
 	 * the bytes corresponding to the value being written are going to 
@@ -14,7 +22,7 @@ public interface DataWriter {
 	/**
 	 * Specializes in converting a particular value of certain data type 
 	 * into a string. 
-	 * @param value the value to conver
+	 * @param value the value to convert
 	 * @return the resulting string
 	 */
 	String toString(Object value); 
