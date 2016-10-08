@@ -26,7 +26,7 @@ public class Record {
 	}
 	
 	/**
-	 * Read the data value corresponding to the selected attribute
+	 * Read the data value corresponding to the selected attribute.
 	 * @param attrNumber index of the selected attribute in schema.. 0, 1, ...
 	 * @return the data value that is extracted from the internal array of bytes
 	 */

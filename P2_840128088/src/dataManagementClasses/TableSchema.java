@@ -133,7 +133,7 @@ public class TableSchema {
 	 * @return reference to the new table schema 
 	 * 
 	 */
-	public TableSchema getSubschema(ArrayList<AttributeInSchema> selectedAttrs) { 
+	public static TableSchema getSubschema(ArrayList<AttributeInSchema> selectedAttrs) { 
 		TableSchema newSchema = new TableSchema(selectedAttrs.size()); 
 		for(int i=0; i<newSchema.size; i++)
 			newSchema.addAttribute(selectedAttrs.get(i));

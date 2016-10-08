@@ -6,9 +6,11 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import dataManagementClasses.Attribute;
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
 import generalUtilities.DataUtils;
+import tableCollectionClasses.Record;
 import tableCollectionClasses.Table;
 
 public class DataFilePopulator {
@@ -16,6 +18,7 @@ public class DataFilePopulator {
 	private RandomAccessFile raf;
 	private Scanner input;
 	private Table table;
+	private TableSchema ts;
 	private String fname;
 	private ArrayList<AttributeInSchema> attrs;
 
@@ -48,14 +51,15 @@ public class DataFilePopulator {
 		File f = new File(fname);
 		//string object to record inputs
 		String answer, attributeName;
-		int attributeID;
+		int attributeID, dataOffset=0;
 		boolean moreAtrributesToAdd = true;
 
 		if (f.exists()) {
 
-			// check if it is a valid file according to this project specs
-			// if it is, then read its content, might be only the schema but
-			// could also be a whole table
+			//check if it is a valid file according to this project specs
+			//if it is, then read its content, might be only the schema but
+			//could also be a whole table
+			//show its content
 			System.out.println("file exists!!!!!!!!!!!");
 		} else {
 
@@ -108,8 +112,9 @@ public class DataFilePopulator {
 					//data type is valid at this point
 					attributeID = DataUtils.getTypeID(answer);
 					//Therefore, create a new attribute with name, attribute ID (associated to a data type) and dataoffset 
-					//in the schema which equals (2 bytes plus 2XattributeName length)
-					attrs.add(new AttributeInSchema(attributeName, attributeID,(2+ 2*attributeName.length())));
+					//in the schema. The first one has 0 offset the second one has an offset equals to the size of the first one.
+					attrs.add(new AttributeInSchema(attributeName, attributeID,dataOffset));
+					dataOffset+= DataUtils.getTypeSize(attributeName);
 					
 					//ask for another attribute again.
 					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
@@ -117,18 +122,38 @@ public class DataFilePopulator {
 				}else{
 					//All attributes were recorded successfully. Should continue to a point
 					//where the process is the same for both (existing file or new file)
-					System.out.println("Thank you! All Attributes have been recorded.\n");
+					System.out.println("\nThank you! All Attributes have been recorded.\n");
 					moreAtrributesToAdd = false;
+					ts = TableSchema.getSubschema(attrs);
+					this.table = new Table(ts);
 					
 				}
-
 			}
-
-		
-
 		}
 		
 		//code to add data
+		System.out.println("It's time to add records containing data for each attribute!");
+		
+		//ask if the use wants to add a new record
+		Record r = new Record(ts);
+		for (int i = 0; i < table.getNumberOfAttrs(); i++) {
+			AttributeInSchema ais = table.getAttribute(i);
+			System.out.print("Enter value for the following attribute " + ((Attribute)ais).toString() + ": ");
+			
+			//read answer
+			Object value = ais.readDataValueFromInputScanner(input); 
+			while(value==null){
+				System.out.print("\nInvalid value. Enter a valid value for the following attribute " + ((Attribute)ais).toString() + ": ");
+				value = ais.readDataValueFromInputScanner(input);
+			}
+			//At this point value should be valid and we can write it in the record.
+			r.writeData(i, value);
+			
+			
+		}
+		
+		
+		
 
 	}
 
