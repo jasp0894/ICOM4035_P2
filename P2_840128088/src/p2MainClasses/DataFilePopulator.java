@@ -107,8 +107,9 @@ public class DataFilePopulator {
 					
 					//data type is valid at this point
 					attributeID = DataUtils.getTypeID(answer);
-					//Therefore, create a new attribute.
-					attrs.add(new AttributeInSchema(attributeName, attributeID, 0));
+					//Therefore, create a new attribute with name, attribute ID (associated to a data type) and dataoffset 
+					//in the schema which equals (2 bytes plus 2XattributeName length)
+					attrs.add(new AttributeInSchema(attributeName, attributeID,(2+ 2*attributeName.length())));
 					
 					//ask for another attribute again.
 					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
@@ -116,7 +117,7 @@ public class DataFilePopulator {
 				}else{
 					//All attributes were recorded successfully. Should continue to a point
 					//where the process is the same for both (existing file or new file)
-					System.out.println("answer was no!");
+					System.out.println("Thank you! All Attributes have been recorded.\n");
 					moreAtrributesToAdd = false;
 					
 				}
