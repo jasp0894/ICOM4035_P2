@@ -24,7 +24,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input10.txt");
+		String fname = new String("input3.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -113,7 +113,7 @@ public class DataFilePopulator {
 					// in the schema. The first one has 0 offset the second one
 					// has an offset equals to the size of the first one.
 					attrs.add(new AttributeInSchema(attributeName, attributeID, dataOffset));
-					dataOffset += DataUtils.getTypeSize(attributeName);
+					dataOffset += DataUtils.getTypeSize(attributeID);
 
 					// ask for another attribute again.
 					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
@@ -165,19 +165,20 @@ public class DataFilePopulator {
 								+ ((Attribute) ais).toString() + ": ");
 						value = ais.readDataValueFromInputScanner(input);
 					}
+					
 					// At this point, value should be valid and we can write it
 					// in the record.
-
 					r.writeData(i, value);
-					//add the record to the table
-					this.table.addRecord(r);
+					
 				}
+				//add the record to the table
+				this.table.addRecord(r);
+				System.out.print("Do you want to add a new record? _Y/_N");
 
 			} else {
 				// no more records to add!
 				moreRecordsToAdd = false;
 				// write to raf (for now display the content of the table)
-				table.displaySchema();
 				table.displayTable();
 			}
 
