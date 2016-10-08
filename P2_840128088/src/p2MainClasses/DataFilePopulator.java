@@ -23,7 +23,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input4.txt");
+		String fname = new String("input9.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -38,8 +38,6 @@ public class DataFilePopulator {
 		attrs = new ArrayList<>();
 
 	}
-	
-
 
 	private void populate() {
 
@@ -54,13 +52,12 @@ public class DataFilePopulator {
 			// if it is, then read its content, might be only the schema but
 			// could also be a whole table
 			// show its content
-			
-			//isValidFile(f or raf)
+
+			// isValidFile(f or raf)
 			// if not end with appropriate message
-			//if valid, then read its content readFileContent(r or raf)
-			//showFileContent()
-			
-			
+			// if valid, then read its content readFileContent(r or raf)
+			// showFileContent()
+
 			System.out.println("file exists!!!!!!!!!!!");
 		} else {
 
@@ -69,15 +66,11 @@ public class DataFilePopulator {
 
 		// code to add data (records)
 		System.out.println("It's time to add records containing data for each attribute!");
-		//read data for the records
+		// read data for the records
 		populateRecords();
-		
-		
-
-	
 	}
-	
-	private void populateFromEmptyFile(File f){
+
+	private void populateFromEmptyFile(File f) {
 		String answer, attributeName;
 		int attributeID, dataOffset = 0;
 		boolean moreAtrributesToAdd = true;
@@ -94,16 +87,16 @@ public class DataFilePopulator {
 		while (moreAtrributesToAdd && input.hasNextLine()) {
 			// read next line and validate it
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
-			
+
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {
-				
-				//read attribute name if answer was affirmative
+
+				// read attribute name if answer was affirmative
 				attributeName = DataUtils.readAttributeNameFromInput(input);
-				
-				// read data type 
+
+				// read data type
 				attributeID = DataUtils.getTypeID(DataUtils.readAttributeTypeFromInput(input));
-				
+
 				// Therefore, create a new attribute with name, attribute ID
 				// (associated to a data type) and dataoffset
 				// in the schema. The first one has 0 offset the second one
@@ -112,7 +105,7 @@ public class DataFilePopulator {
 				dataOffset += DataUtils.getTypeSize(attributeID);
 
 				// ask for another attribute again.
-				System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
+				System.out.print("Do you want to add a new attribute? " + "Y_/N_");
 
 			} else {
 				// All attributes were recorded successfully. Should
@@ -132,13 +125,13 @@ public class DataFilePopulator {
 
 			}
 		}
-		
+
 	}
-	
-	private void populateRecords(){
+
+	private void populateRecords() {
 		String answer;
 		boolean moreRecordsToAdd = true;
-	
+
 		// ask if the use wants to add a new record
 		System.out.print("\nDo you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
@@ -146,18 +139,18 @@ public class DataFilePopulator {
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
 
 			// if answer was affirmative
-			if (answer.equalsIgnoreCase("y")) {	
+			if (answer.equalsIgnoreCase("y")) {
 				// add the record to the table
 				this.table.addRecord(DataUtils.requestDataForRecord(ts, input));
-				//ask for a new record
+				// ask for a new record
 				System.out.print("\nDo you want to add a new record? _Y/_N");
 			} else {
 				// no more records to add!
 				moreRecordsToAdd = false;
-				// write to raf (for now display the content of the table)
-				table.displayTable();
+				// write to raf
 				try {
 					table.writeTableDataToFile(raf);
+					table.displayTable();
 					raf.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
