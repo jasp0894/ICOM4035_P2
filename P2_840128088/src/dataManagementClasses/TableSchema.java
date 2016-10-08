@@ -128,12 +128,15 @@ public class TableSchema {
 	}
 	
 	/**
-	 * Gets a sub-part of a table schema. 
-	 * @param selectedAttrs determines the size of the new schema.
-	 * @return reference to an empty schema of size determined by selectedAttrs
+	 * Creates a table schema from a list of attributes.
+	 * @param selectedAttrs determines the size and content of the new schema.
+	 * @return reference to the new table schema 
+	 * 
 	 */
-	public TableSchema getSubschema(ArrayList<Integer> selectedAttrs) { 
+	public TableSchema getSubschema(ArrayList<AttributeInSchema> selectedAttrs) { 
 		TableSchema newSchema = new TableSchema(selectedAttrs.size()); 
+		for(int i=0; i<newSchema.size; i++)
+			newSchema.addAttribute(selectedAttrs.get(i));
 		
 		return newSchema; 
 	}
