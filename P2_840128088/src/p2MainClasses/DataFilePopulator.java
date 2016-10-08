@@ -24,7 +24,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input5.txt");
+		String fname = new String("input10.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -69,15 +69,15 @@ public class DataFilePopulator {
 
 			System.out.print("File " + fname + " has been created.\n");
 			System.out.print("Do you want to add a new attribute? Y_/N_");
-			while (input.hasNext() && moreAtrributesToAdd) {
+			while (moreAtrributesToAdd && input.hasNextLine()) {
 				// read next line and validate it
-				answer = input.next();
+				answer = input.nextLine();
 
 				while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
 					System.out.print("Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
 
 					// read answer again
-					answer = input.next();
+					answer = input.nextLine();
 				}
 
 				// if answer was affirmative
@@ -85,25 +85,25 @@ public class DataFilePopulator {
 					System.out.print("Enter the name of the attribute: ");
 
 					// read answer
-					answer = input.next();
+					answer = input.nextLine();
 
 					while (!DataUtils.isValidName(answer)) {
 						System.out.print("\nInvalid name. Enter a valid name of the attribute: ");
-						answer = input.next();
+						answer = input.nextLine();
 					}
 
 					// attribute name is valid at this point
 					attributeName = answer;
 					System.out.print(
-							"\nEnter type for the attribute {byte, boolean, char, short, int, float,double, long}: ");
+							"\nEnter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
 					// read answer
-					answer = input.next();
+					answer = input.nextLine();
 
 					// keep asking if invalid data type
 					while (!DataUtils.isValidDataType(answer)) {
 						System.out.print(
-								"\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long}: ");
-						answer = input.next();
+								"\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+						answer = input.nextLine();
 					}
 
 					// data type is valid at this point
@@ -137,15 +137,15 @@ public class DataFilePopulator {
 
 		// ask if the use wants to add a new record
 		System.out.print("Do you want to add a new record? _Y/_N");
-		while (input.hasNext() && moreRecordsToAdd) {
+		while (moreRecordsToAdd && input.hasNextLine()) {
 			// read next line and validate it
-			answer = input.next();
+			answer = input.nextLine();
 
 			while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
 				System.out.print("Incorrect answer. Do you want to add a new Record? Y_/N_\n");
 
 				// read answer again
-				answer = input.next();
+				answer = input.nextLine();
 			}
 
 			// if answer was affirmative
@@ -157,6 +157,7 @@ public class DataFilePopulator {
 					
 					System.out.print("Enter value for the following attribute " + ((Attribute) ais).toString() + ": ");
 
+					
 					// read answer
 					Object value = ais.readDataValueFromInputScanner(input);
 					while (value == null) {
@@ -166,6 +167,7 @@ public class DataFilePopulator {
 					}
 					// At this point, value should be valid and we can write it
 					// in the record.
+
 					r.writeData(i, value);
 					//add the record to the table
 					this.table.addRecord(r);

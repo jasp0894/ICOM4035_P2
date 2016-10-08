@@ -135,7 +135,7 @@ public class TableSchema {
 	 */
 	public static TableSchema getSubschema(ArrayList<AttributeInSchema> selectedAttrs) { 
 		TableSchema newSchema = new TableSchema(selectedAttrs.size()); 
-		for(int i=0; i<newSchema.size; i++)
+		for(int i=0; i<selectedAttrs.size(); i++)
 			newSchema.addAttribute(selectedAttrs.get(i));
 		
 		return newSchema; 
