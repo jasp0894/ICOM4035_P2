@@ -5,9 +5,10 @@ import interfaces.DataReader;
 import interfaces.DataWriter;
 
 /**
+ * This class provides a set of utilities or tools to aid in the execution of certain
+ * program' operation execution.
  * 
  * @author J.A. Sanchez Perez
- *
  */
 public class DataUtils {
 
@@ -28,14 +29,10 @@ public class DataUtils {
 			                             new TYPE("double", Double.BYTES, DoubleDataReader.INSTANCE, DoubleDataWriter.INSTANCE), 
 			                             new TYPE("boolean", 1, BooleanDataReader.INSTANCE, BooleanDataWriter.INSTANCE), 
 			                             new TYPE("date", 4, DateDataReader.INSTANCE, DateDataWriter.INSTANCE)}; 
-
-	
-	
-	
 	/**
-	 * 
-	 * @param tName
-	 * @return
+	 * Gets the ID associated to the data type with the given tName. 
+	 * @param tName The name of the data type
+	 * @return the associated ID if exists, if not returns -1.
 	 */
 	public static int getTypeID(String tName) { 
 		for (int i=0; i<TYPEList.length; i++) 
@@ -46,10 +43,10 @@ public class DataUtils {
 	
 	
 	/**
-	 * 
-	 * @param tIndex
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Gets the name of the data type with ID specified by tIndex.
+	 * @param tIndex data type ID
+	 * @return name of the data type
+	 * @throws IllegalArgumentException if index cannot be associated to a valid data type for this project.
 	 */
 	public static String getTypeName(int tIndex) throws IllegalArgumentException { 
 		if (tIndex<0 || tIndex > TYPEList.length)
@@ -58,9 +55,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param tName
-	 * @return
+	 * Gets the size of the data type whose type name is given by tName.
+	 * @param tName name of the data type
+	 * @return size of the data type if tName represents a valid data type, if not returns -1
 	 */
 	public static int getTypeSize(String tName) { 
 		for (int i=0; i<TYPEList.length; i++) 
@@ -71,9 +68,9 @@ public class DataUtils {
 
 	
 	/**
-	 * 
-	 * @param index
-	 * @return
+	 * Gets the size of the data type whose associated ID is given by index.
+	 * @param index the associated ID of the data type
+	 * @return size of the data type. 
 	 */
 	public static int getTypeSize(int index) { 
 		if (index<0 || index > TYPEList.length)
@@ -82,9 +79,9 @@ public class DataUtils {
 	}
 
 	/**
-	 * 
-	 * @param index
-	 * @return
+	 * Gets the data type's associated DataReader whose ID is given by index.
+	 * @param index data type's associated ID
+	 * @return the DataReader
 	 */
 	public static DataReader getTypeDataReader(int index) { 
 		if (index<0 || index > TYPEList.length)
@@ -93,9 +90,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param index
-	 * @return
+	 * Gets the data type's associated DataWriter whose ID is given by index.
+	 * @param index data type's associated ID
+	 * @return the DataWriter
 	 */
 	public static DataWriter getTypeDataWriter(int index) { 
 		if (index<0 || index > TYPEList.length)
@@ -105,9 +102,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param tName
-	 * @return
+	 * Determines if the given type name represents an actual data type of this project.
+	 * @param tName the name of the data type
+	 * @return true if valid, false otherwise.
 	 */
 	public static boolean isValidDataType(String tName) { 
 		return getTypeID(tName) != -1; 
