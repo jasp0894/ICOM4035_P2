@@ -120,11 +120,10 @@ public class Table {
 	 */
 	public void writeTableDataToFile(RandomAccessFile file) throws IOException {
 		
-		long numberOfDataRecords = 
-				(file.length() - file.getFilePointer())/ts.getDataRecordLength(); //filepointer
-		//is assumed to be just after the schema.
 		
-				for (int dr = 0; dr < numberOfDataRecords; dr++) {
+		//file pointer is assumed to be just after the schema.
+		
+				for (int dr = 0; dr < rList.size(); dr++) {
 					Record record = this.getRecord(dr); 
 					record.writeToFile(file); 
 				}

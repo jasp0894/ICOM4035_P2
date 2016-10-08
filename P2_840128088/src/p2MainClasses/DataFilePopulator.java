@@ -25,7 +25,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input0.txt");
+		String fname = new String("input3.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -188,6 +188,7 @@ public class DataFilePopulator {
 				table.displayTable();
 				try {
 					table.writeTableDataToFile(raf);
+					raf.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
