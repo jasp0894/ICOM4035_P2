@@ -25,7 +25,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input8.txt");
+		String fname = new String("input0.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -50,7 +50,7 @@ public class DataFilePopulator {
 		// string object to record inputs
 		String answer, attributeName;
 		int attributeID, dataOffset = 0;
-		boolean moreAtrributesToAdd = true, moreRecordsToAdd=true;
+		boolean moreAtrributesToAdd = true, moreRecordsToAdd = true;
 
 		if (f.exists()) {
 
@@ -62,7 +62,7 @@ public class DataFilePopulator {
 		} else {
 
 			try {
-				 raf = new RandomAccessFile(f, "rw");
+				raf = new RandomAccessFile(f, "rw");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,7 +134,6 @@ public class DataFilePopulator {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
 
 				}
 			}
@@ -158,14 +157,13 @@ public class DataFilePopulator {
 
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {
-				
+
 				Record r = new Record(ts);
 				for (int i = 0; i < table.getNumberOfAttrs(); i++) {
 					AttributeInSchema ais = table.getAttribute(i);
-					
+
 					System.out.print("Enter value for the following attribute " + ((Attribute) ais).toString() + ": ");
 
-					
 					// read answer
 					Object value = ais.readDataValueFromInputScanner(input);
 					while (value == null) {
@@ -173,13 +171,13 @@ public class DataFilePopulator {
 								+ ((Attribute) ais).toString() + ": ");
 						value = ais.readDataValueFromInputScanner(input);
 					}
-					
+
 					// At this point, value should be valid and we can write it
 					// in the record.
 					r.writeData(i, value);
-					
+
 				}
-				//add the record to the table
+				// add the record to the table
 				this.table.addRecord(r);
 				System.out.print("Do you want to add a new record? _Y/_N");
 
@@ -195,6 +193,6 @@ public class DataFilePopulator {
 					e.printStackTrace();
 				}
 			}
-		}		
+		}
 	}
 }
