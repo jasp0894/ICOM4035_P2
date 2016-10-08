@@ -6,39 +6,78 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
+/**
+ * Defines an object for the schema of the table, which holds a list of attributes.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class TableSchema {
 	private AttributeInSchema[] attrs;   // the attributes
 	private int size;     // number of attributes added
 	
+	/**
+	 * Create a new instance with n attributes.
+	 * @param n number of attributes.
+	 */
 	private TableSchema(int n) { 
 		attrs = new AttributeInSchema[n]; 
 	}
 	
+	/**
+	 * Add a new attribute to the list. 
+	 * @param attr new attribute 
+	 * @throws IllegalStateException if the table cannot hold more attributes than what it was created for.
+	 */
 	public void addAttribute(AttributeInSchema attr) throws IllegalStateException { 
 		if (size == attrs.length)
 			throw new IllegalStateException("Table of attributes is full."); 
 		attrs[size++] = attr; 
 	}
 	
+	/**
+	 * Gets the number (size of the attr lists)  of attributes 
+	 * @return the size
+	 */
 	public int getNumberOfAttrs() { 
 		return size; 
 	}
 
+	/**
+	 * Get the attribute at index.
+	 * @param index the index of attribute
+	 * @return attribute
+	 * @throws IndexOutOfBoundsException if index does not represent an attribute
+	 */
 	public AttributeInSchema getAttr(int index) throws IndexOutOfBoundsException { 
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("getAttr: Index out of bounds: " + index); 
 		return attrs[index]; 
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isValid() { 
 		return false; 
 	}
 	
+	/**
+	 * Creates an instance of this class.
+	 * @param n number of attributes to initiate an instance of this.
+	 * @return the instance of this.
+	 */
 	public static TableSchema getInstance(int n) { 
 		// PRE: n is a valid positive integer value
 		return new TableSchema(n); 
 	}
 	
+	/**
+	 * Creates an instance of this from a RandomAccessFile (RAF).
+	 * @param file the RAF
+	 * @return the instance of this
+	 * @throws IOException if an I/O error occurs
+	 */
 	public static TableSchema getInstance(RandomAccessFile file) throws IOException { 
 		file.seek(0);
 		short nAttrs = file.readShort(); 
@@ -54,6 +93,12 @@ public class TableSchema {
 		
 	}
 	
+	/**
+	 * Saves a tableSchema into a RAF.
+	 * @param file the RAF
+	 * @throws IllegalStateException if the file pointer is not at 0 at the beginning.
+	 * @throws IOException if an I/O error occurs.
+	 */
 	public void saveSchema(RandomAccessFile file) 
 			throws IllegalStateException, IOException { 
 		// Saves this schema into the given RAF, beginning at its current file pointer
@@ -70,6 +115,29 @@ public class TableSchema {
 			a.writeToFile(file);
 	}
 	
+	/**
+	 * Gets length of each data record, which holds tuples of values. 
+	 * @return the length.
+	 */
+	public int getDataRecordLength() { 
+		int len = 0; 
+		
+		for (AttributeInSchema ais : this.attrs) 
+			len += ais.getDataSize(); 
+		return len; 
+	}
+	
+	/**
+	 * Gets a sub-part of a table schema. 
+	 * @param selectedAttrs determines the size of the new schema.
+	 * @return reference to an empty schema of size determined by selectedAttrs
+	 */
+	public TableSchema getSubschema(ArrayList<Integer> selectedAttrs) { 
+		TableSchema newSchema = new TableSchema(selectedAttrs.size()); 
+		
+		return newSchema; 
+	}
+	
 	public String toString() { 
 		String s = "|"; 
 		for (int i=0; i<attrs.length-1; i++) 
@@ -80,18 +148,4 @@ public class TableSchema {
 		return s; 
 	}
 	
-	public int getDataRecordLength() { 
-		int len = 0; 
-		
-		for (AttributeInSchema ais : this.attrs) 
-			len += ais.getDataSize(); 
-		return len; 
-	}
-	
-	public TableSchema getSubschema(ArrayList<Integer> selectedAttrs) { 
-		TableSchema newSchema = new TableSchema(selectedAttrs.size()); 
-		
-		
-		return newSchema; 
-	}
 }
