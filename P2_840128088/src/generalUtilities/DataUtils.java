@@ -1,9 +1,29 @@
 package generalUtilities;
 
-import java.io.File;
 import java.util.Scanner;
 
-import dataManagementClasses.*;
+import dataManagementClasses.Attribute;
+import dataManagementClasses.AttributeInSchema;
+import dataManagementClasses.BooleanDataReader;
+import dataManagementClasses.BooleanDataWriter;
+import dataManagementClasses.ByteDataReader;
+import dataManagementClasses.ByteDataWriter;
+import dataManagementClasses.CharDataReader;
+import dataManagementClasses.CharDataWriter;
+import dataManagementClasses.Date;
+import dataManagementClasses.DateDataReader;
+import dataManagementClasses.DateDataWriter;
+import dataManagementClasses.DoubleDataReader;
+import dataManagementClasses.DoubleDataWriter;
+import dataManagementClasses.FloatDataReader;
+import dataManagementClasses.FloatDataWriter;
+import dataManagementClasses.IntDataReader;
+import dataManagementClasses.IntDataWriter;
+import dataManagementClasses.LongDataReader;
+import dataManagementClasses.LongDataWriter;
+import dataManagementClasses.ShortDataReader;
+import dataManagementClasses.ShortDataWriter;
+import dataManagementClasses.TableSchema;
 import interfaces.DataReader;
 import interfaces.DataWriter;
 import tableCollectionClasses.Record;
@@ -164,13 +184,13 @@ public class DataUtils {
 	public static String readAttributeNameFromInput(Scanner input) {
 		String answer;
 
-		System.out.print("Enter the name of the attribute: ");
+		System.out.print("\tEnter the name of the attribute: ");
 
 		// read answer
 		answer = input.nextLine();
 
 		while (!DataUtils.isValidName(answer)) {
-			System.out.print("\nInvalid name. Enter a valid name of the attribute: ");
+			System.out.print("\n****Invalid name. Enter a valid name of the attribute: ");
 			answer = input.nextLine();
 		}
 		return answer;
@@ -186,14 +206,14 @@ public class DataUtils {
 	public static String readAttributeTypeFromInput(Scanner input) {
 		String answer;
 
-		System.out.print("Enter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+		System.out.print("\tEnter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
 		// read answer
 		answer = input.nextLine();
 
 		// keep asking if invalid data type
 		while (!DataUtils.isValidDataType(answer)) {
 			System.out.print(
-					"\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+					"\n****Invalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long, date}: \n");
 			answer = input.nextLine();
 		}
 
@@ -212,7 +232,7 @@ public class DataUtils {
 		String answer = input.nextLine();
 
 		while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
-			System.out.print("Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
+			System.out.print("\n****Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
 
 			// read answer again
 			answer = input.nextLine();
@@ -232,13 +252,13 @@ public class DataUtils {
 		for (int i = 0; i < ts.getNumberOfAttrs(); i++) {
 			AttributeInSchema ais = ts.getAttr(i);
 
-			System.out.print("Enter value for the following attribute " + ((Attribute) ais).toString() + ": ");
+			System.out.print("\tEnter value for the following attribute " + ((Attribute) ais).toString() + ": ");
 
 			// read answer
 			Object value = ais.readDataValueFromInputScanner(input);
 			while (value == null) {
-				System.out.print("\nInvalid value. Enter a valid value for the following attribute "
-						+ ((Attribute) ais).toString() + ": ");
+				System.out.print("\n****Invalid value. Enter a valid value for the following attribute "
+						+ ((Attribute) ais).toString() + ": \n");
 				value = ais.readDataValueFromInputScanner(input);
 			}
 

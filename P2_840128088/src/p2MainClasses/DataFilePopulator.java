@@ -23,7 +23,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input20.txt");
+		String fname = new String("input4.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -43,7 +43,7 @@ public class DataFilePopulator {
 
 	private void populate() {
 
-		System.out.print("Welcome to DataFilePopulator!\n");
+		System.out.print("Welcome to DataFilePopulator!\n\n");
 
 		// create new File object
 		File f = new File(fname);
@@ -89,8 +89,8 @@ public class DataFilePopulator {
 			e.printStackTrace();
 		}
 
-		System.out.print("File " + fname + " has been created.\n");
-		System.out.print("Do you want to add a new attribute? Y_/N_");
+		System.out.print("----File " + fname + " has been created.\n");
+		System.out.print("\nDo you want to add a new attribute? Y_/N_");
 		while (moreAtrributesToAdd && input.hasNextLine()) {
 			// read next line and validate it
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
@@ -140,7 +140,7 @@ public class DataFilePopulator {
 		boolean moreRecordsToAdd = true;
 	
 		// ask if the use wants to add a new record
-		System.out.print("Do you want to add a new record? _Y/_N");
+		System.out.print("\nDo you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
 			// read next line and validate it
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
@@ -150,7 +150,7 @@ public class DataFilePopulator {
 				// add the record to the table
 				this.table.addRecord(DataUtils.requestDataForRecord(ts, input));
 				//ask for a new record
-				System.out.print("Do you want to add a new record? _Y/_N");
+				System.out.print("\nDo you want to add a new record? _Y/_N");
 			} else {
 				// no more records to add!
 				moreRecordsToAdd = false;
