@@ -7,11 +7,9 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import dataManagementClasses.Attribute;
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
 import generalUtilities.DataUtils;
-import tableCollectionClasses.Record;
 import tableCollectionClasses.Table;
 
 public class DataFilePopulator {
@@ -25,7 +23,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input7.txt");
+		String fname = new String("input20.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -40,6 +38,8 @@ public class DataFilePopulator {
 		attrs = new ArrayList<>();
 
 	}
+	
+
 
 	private void populate() {
 
@@ -47,10 +47,6 @@ public class DataFilePopulator {
 
 		// create new File object
 		File f = new File(fname);
-		// string object to record inputs
-		String answer, attributeName;
-		int attributeID, dataOffset = 0;
-		boolean moreAtrributesToAdd = true, moreRecordsToAdd = true;
 
 		if (f.exists()) {
 
@@ -58,64 +54,91 @@ public class DataFilePopulator {
 			// if it is, then read its content, might be only the schema but
 			// could also be a whole table
 			// show its content
+			
+			//isValidFile(f or raf)
+			// if not end with appropriate message
+			//if valid, then read its content readFileContent(r or raf)
+			//showFileContent()
+			
+			
 			System.out.println("file exists!!!!!!!!!!!");
 		} else {
 
-			try {
-				raf = new RandomAccessFile(f, "rw");
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			System.out.print("File " + fname + " has been created.\n");
-			System.out.print("Do you want to add a new attribute? Y_/N_");
-			while (moreAtrributesToAdd && input.hasNextLine()) {
-				// read next line and validate it
-				answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
-				
-				// if answer was affirmative
-				if (answer.equalsIgnoreCase("y")) {
-					
-					//read attribute name if answer was affirmative
-					attributeName = DataUtils.readAttributeNameFromInput(input);
-					
-					// read data type 
-					attributeID = DataUtils.getTypeID(DataUtils.readAttributeTypeFromInput(input));
-					
-					// Therefore, create a new attribute with name, attribute ID
-					// (associated to a data type) and dataoffset
-					// in the schema. The first one has 0 offset the second one
-					// has an offset equals to the size of the first one.
-					attrs.add(new AttributeInSchema(attributeName, attributeID, dataOffset));
-					dataOffset += DataUtils.getTypeSize(attributeID);
-
-					// ask for another attribute again.
-					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
-
-				} else {
-					// All attributes were recorded successfully. Should
-					// continue to a point
-					// where the process is the same for both (existing file or
-					// new file)
-					System.out.println("\nThank you! All Attributes have been recorded.\n");
-					moreAtrributesToAdd = false;
-					ts = TableSchema.getSubschema(attrs);
-					this.table = new Table(ts);
-					try {
-						ts.saveSchema(raf);
-					} catch (IllegalStateException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-			}
+			populateFromEmptyFile(f);
 		}
 
 		// code to add data (records)
 		System.out.println("It's time to add records containing data for each attribute!");
+		//read data for the records
+		populateRecords();
+		
+		
 
+	
+	}
+	
+	private void populateFromEmptyFile(File f){
+		String answer, attributeName;
+		int attributeID, dataOffset = 0;
+		boolean moreAtrributesToAdd = true;
+
+		try {
+			raf = new RandomAccessFile(f, "rw");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.print("File " + fname + " has been created.\n");
+		System.out.print("Do you want to add a new attribute? Y_/N_");
+		while (moreAtrributesToAdd && input.hasNextLine()) {
+			// read next line and validate it
+			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
+			
+			// if answer was affirmative
+			if (answer.equalsIgnoreCase("y")) {
+				
+				//read attribute name if answer was affirmative
+				attributeName = DataUtils.readAttributeNameFromInput(input);
+				
+				// read data type 
+				attributeID = DataUtils.getTypeID(DataUtils.readAttributeTypeFromInput(input));
+				
+				// Therefore, create a new attribute with name, attribute ID
+				// (associated to a data type) and dataoffset
+				// in the schema. The first one has 0 offset the second one
+				// has an offset equals to the size of the first one.
+				attrs.add(new AttributeInSchema(attributeName, attributeID, dataOffset));
+				dataOffset += DataUtils.getTypeSize(attributeID);
+
+				// ask for another attribute again.
+				System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
+
+			} else {
+				// All attributes were recorded successfully. Should
+				// continue to a point
+				// where the process is the same for both (existing file or
+				// new file)
+				System.out.println("\nThank you! All Attributes have been recorded.\n");
+				moreAtrributesToAdd = false;
+				ts = TableSchema.getSubschema(attrs);
+				this.table = new Table(ts);
+				try {
+					ts.saveSchema(raf);
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+		
+	}
+	
+	private void populateRecords(){
+		String answer;
+		boolean moreRecordsToAdd = true;
+	
 		// ask if the use wants to add a new record
 		System.out.print("Do you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
@@ -123,31 +146,11 @@ public class DataFilePopulator {
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
 
 			// if answer was affirmative
-			if (answer.equalsIgnoreCase("y")) {
-
-				Record r = new Record(ts);
-				for (int i = 0; i < table.getNumberOfAttrs(); i++) {
-					AttributeInSchema ais = table.getAttribute(i);
-
-					System.out.print("Enter value for the following attribute " + ((Attribute) ais).toString() + ": ");
-
-					// read answer
-					Object value = ais.readDataValueFromInputScanner(input);
-					while (value == null) {
-						System.out.print("\nInvalid value. Enter a valid value for the following attribute "
-								+ ((Attribute) ais).toString() + ": ");
-						value = ais.readDataValueFromInputScanner(input);
-					}
-
-					// At this point, value should be valid and we can write it
-					// in the record.
-					r.writeData(i, value);
-
-				}
+			if (answer.equalsIgnoreCase("y")) {	
 				// add the record to the table
-				this.table.addRecord(r);
+				this.table.addRecord(DataUtils.requestDataForRecord(ts, input));
+				//ask for a new record
 				System.out.print("Do you want to add a new record? _Y/_N");
-
 			} else {
 				// no more records to add!
 				moreRecordsToAdd = false;
