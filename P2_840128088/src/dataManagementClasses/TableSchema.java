@@ -90,7 +90,6 @@ public class TableSchema {
 			offset += DataUtils.getTypeSize(ais.gettIndex()); 
 		}
 		return st; 
-		
 	}
 	
 	/**

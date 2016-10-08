@@ -10,6 +10,7 @@ import java.util.Scanner;
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
 import generalUtilities.DataUtils;
+import tableCollectionClasses.Record;
 import tableCollectionClasses.Table;
 
 public class DataFilePopulator {
@@ -24,6 +25,7 @@ public class DataFilePopulator {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String fname = new String("input9.txt");
+
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -46,6 +48,8 @@ public class DataFilePopulator {
 		// create new File object
 		File f = new File(fname);
 
+		boolean invalidFile = false;
+
 		if (f.exists()) {
 
 			// check if it is a valid file according to this project specs
@@ -53,24 +57,52 @@ public class DataFilePopulator {
 			// could also be a whole table
 			// show its content
 
+			// readSchemaFromFile()
 			// isValidFile(f or raf)
 			// if not end with appropriate message
 			// if valid, then read its content readFileContent(r or raf)
 			// showFileContent()
+			
 
-			System.out.println("file exists!!!!!!!!!!!");
+			try {
+				raf = new RandomAccessFile(f, "rw");
+				
+				this.ts = TableSchema.getInstance(raf);
+				this.table = new Table(ts);
+				
+				for(int i=0; i<ts.getNumberOfAttrs(); i++){
+					table.addRecord(new Record(ts));
+				}
+				
+				if(ts.ge)
+				
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	
+			
 		} else {
 
-			populateFromEmptyFile(f);
+			populateSchemaFromEmptyFile(f);
 		}
 
-		// code to add data (records)
-		System.out.println("It's time to add records containing data for each attribute!");
-		// read data for the records
-		populateRecords();
+		if (!invalidFile) {
+			// code to add data (records)
+			System.out.println("It's time to add records containing data for each attribute!");
+			// read data for the records
+			populateRecords();
+		}else{
+			System.out.println("\n****Sorry, It seems that File " +  this.fname + " is not valid. Try again! ");
+		}
 	}
 
-	private void populateFromEmptyFile(File f) {
+	private void populateSchemaFromEmptyFile(File f) {
 		String answer, attributeName;
 		int attributeID, dataOffset = 0;
 		boolean moreAtrributesToAdd = true;
