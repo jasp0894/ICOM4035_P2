@@ -25,7 +25,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input3.txt");
+		String fname = new String("input4.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
