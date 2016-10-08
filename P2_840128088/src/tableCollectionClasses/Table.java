@@ -112,6 +112,24 @@ public class Table {
 			addRecord(record); 
 		}
 	}
+	
+	/**
+	 * Write this table date to a RAF.
+	 * @param file the random access file
+	 * @throws IOException if an IO error occurs.
+	 */
+	public void writeTableDataToFile(RandomAccessFile file) throws IOException {
+		
+		long numberOfDataRecords = 
+				(file.length() - file.getFilePointer())/ts.getDataRecordLength(); //filepointer
+		//is assumed to be just after the schema.
+		
+				for (int dr = 0; dr < numberOfDataRecords; dr++) {
+					Record record = this.getRecord(dr); 
+					record.writeToFile(file); 
+				}
+		
+	}
 /*
  	public static Table readTableDataFromFile(RandomAccessFile file) throws IOException {
  

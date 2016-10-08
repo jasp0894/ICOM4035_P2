@@ -2,6 +2,7 @@ package p2MainClasses;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,7 +25,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input3.txt");
+		String fname = new String("input8.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -61,7 +62,7 @@ public class DataFilePopulator {
 		} else {
 
 			try {
-				RandomAccessFile raf = new RandomAccessFile(f, "rw");
+				 raf = new RandomAccessFile(f, "rw");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -127,6 +128,13 @@ public class DataFilePopulator {
 					moreAtrributesToAdd = false;
 					ts = TableSchema.getSubschema(attrs);
 					this.table = new Table(ts);
+					try {
+						ts.saveSchema(raf);
+					} catch (IllegalStateException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 
 				}
 			}
@@ -180,11 +188,13 @@ public class DataFilePopulator {
 				moreRecordsToAdd = false;
 				// write to raf (for now display the content of the table)
 				table.displayTable();
+				try {
+					table.writeTableDataToFile(raf);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-
-		}
-		
-		
-
+		}		
 	}
 }
