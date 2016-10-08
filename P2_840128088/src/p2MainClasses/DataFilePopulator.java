@@ -38,13 +38,18 @@ public class DataFilePopulator {
 		} else {
 
 			System.out.print("File " + fname + " is empty.\n");
-
+			System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
 			while (input.hasNext()) {
-				do {
-					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
-					// read next line and validate it
+			
+				// read next line and validate it
+				answer = input.next();
+				
+				while (!(answer.equalsIgnoreCase("y")||answer.equalsIgnoreCase("n"))){
+					System.out.print("Incorrect answer. Do you want to add a new attribute? " + "Y_/N_\n");
+					
+					// read answer again
 					answer = input.next();
-				} while (!(answer.equalsIgnoreCase("y")||answer.equalsIgnoreCase("n")));
+				}
 
 				//if answer was affirmative
 				if (answer.equalsIgnoreCase("y")) {
@@ -58,19 +63,35 @@ public class DataFilePopulator {
 						answer = input.next();
 					}
 					
-
 					// attribute name is valid at this point
+					System.out.print("\nEnter type for the attribute {byte, boolean, char, short, int, float,double, long}: ");
+					//read answer
+					answer = input.next();
+					
+					//keep asking if invalid data type
+					while (!DataUtils.isValidDataType(answer)) {
+						System.out.print("\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long}: ");
+						answer = input.next();
+					}
+					
+					//data type is valid at this point
+					//ask for another attribute again.
+					System.out.print("Do you want to add a new attribute? " + "Y_/N_\n");
 
 				}else{
 					//All attributes were recorded successfully. Should continue to a point
 					//where the process is the same for both (existing file or new file)
+					System.out.println("answer was no!");
+					input.next(); //clean buffer?
 				}
 
 			}
 
-			// answer is valid
+		
 
 		}
+		
+		//code to add data
 
 	}
 
