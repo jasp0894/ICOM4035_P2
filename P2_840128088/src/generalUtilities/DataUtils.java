@@ -1,5 +1,7 @@
 package generalUtilities;
 
+import java.io.File;
+
 import dataManagementClasses.*;
 import interfaces.DataReader;
 import interfaces.DataWriter;
@@ -261,4 +263,14 @@ public class DataUtils {
 		// if it reaches here, then the date is valid as per the specs given
 		return true;
 	}
+//	
+//	/**
+//	 * Determines if the given file name exists in directory.
+//	 * @param fname the name of the file
+//	 * @return reference to the file if exists, 
+//	 */
+//	public static File exists(String fname){
+//		
+//		
+//	}
 }
