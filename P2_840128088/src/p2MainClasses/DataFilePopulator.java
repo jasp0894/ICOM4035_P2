@@ -25,7 +25,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input4.txt");
+		String fname = new String("input7.txt");
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
 		datafp.populate();
@@ -72,43 +72,17 @@ public class DataFilePopulator {
 			System.out.print("Do you want to add a new attribute? Y_/N_");
 			while (moreAtrributesToAdd && input.hasNextLine()) {
 				// read next line and validate it
-				answer = input.nextLine();
-
-				while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
-					System.out.print("Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
-
-					// read answer again
-					answer = input.nextLine();
-				}
-
+				answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
+				
 				// if answer was affirmative
 				if (answer.equalsIgnoreCase("y")) {
-					System.out.print("Enter the name of the attribute: ");
-
-					// read answer
-					answer = input.nextLine();
-
-					while (!DataUtils.isValidName(answer)) {
-						System.out.print("\nInvalid name. Enter a valid name of the attribute: ");
-						answer = input.nextLine();
-					}
-
-					// attribute name is valid at this point
-					attributeName = answer;
-					System.out.print(
-							"\nEnter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
-					// read answer
-					answer = input.nextLine();
-
-					// keep asking if invalid data type
-					while (!DataUtils.isValidDataType(answer)) {
-						System.out.print(
-								"\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
-						answer = input.nextLine();
-					}
-
-					// data type is valid at this point
-					attributeID = DataUtils.getTypeID(answer);
+					
+					//read attribute name if answer was affirmative
+					attributeName = DataUtils.readAttributeNameFromInput(input);
+					
+					// read data type 
+					attributeID = DataUtils.getTypeID(DataUtils.readAttributeTypeFromInput(input));
+					
 					// Therefore, create a new attribute with name, attribute ID
 					// (associated to a data type) and dataoffset
 					// in the schema. The first one has 0 offset the second one
@@ -146,14 +120,7 @@ public class DataFilePopulator {
 		System.out.print("Do you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
 			// read next line and validate it
-			answer = input.nextLine();
-
-			while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
-				System.out.print("Incorrect answer. Do you want to add a new Record? Y_/N_\n");
-
-				// read answer again
-				answer = input.nextLine();
-			}
+			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
 
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {

@@ -1,6 +1,7 @@
 package generalUtilities;
 
 import java.io.File;
+import java.util.Scanner;
 
 import dataManagementClasses.*;
 import interfaces.DataReader;
@@ -131,6 +132,68 @@ public class DataUtils {
 		// if it reaches here, then it is a valid name
 		return true; 
 	}
+	
+	/**
+	 * Read an attribute name from an input scanner.
+	 * @param input the input scanner
+	 * @return reference to attribute name.
+	 */
+	public static String readAttributeNameFromInput(Scanner input){
+		String answer;
+		
+		System.out.print("Enter the name of the attribute: ");
+
+		// read answer
+		answer = input.nextLine();
+
+		while (!DataUtils.isValidName(answer)) {
+			System.out.print("\nInvalid name. Enter a valid name of the attribute: ");
+			answer = input.nextLine();
+		}
+		return answer;
+	}
+	/**
+	 * Read an attribute name from an input scanner.
+	 * @param input the input scanner
+	 * @return reference to attribute name.
+	 */
+	public static String readAttributeTypeFromInput(Scanner input){
+		String answer;
+		
+		System.out.print(
+				"Enter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+		// read answer
+		answer = input.nextLine();
+
+		// keep asking if invalid data type
+		while (!DataUtils.isValidDataType(answer)) {
+			System.out.print(
+					"\nInvalid type. Enter a valid type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+			answer = input.nextLine();
+		}
+		
+		return answer;
+
+	}
+	
+	/**
+	 * Get and validate answer to Y/N question from input scanner.
+	 * @param input the scanner
+	 * @return the answer.
+	 */
+	public static String getAndValidateAnswerToQuestionFrom(Scanner input){
+		String answer = input.nextLine();
+
+		while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
+			System.out.print("Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
+
+			// read answer again
+			answer = input.nextLine();
+		}
+		
+		return answer;
+	}
+	
 	
 	/**
 	 * Determines if the given String represents a valid Int.
