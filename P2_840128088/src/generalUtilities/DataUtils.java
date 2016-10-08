@@ -111,13 +111,14 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Checks if the given name is valid according to the project rules. 
+	 * @param s the name
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidName(String s) { 
 		s = s.trim(); 
-		if (s.length()==0 || s.length()>256) return false; 
+		if (s.length()==0 || s.length()>256) return false; //the length of s is restricted to 2^8 = 256
+														//since a byte is used to store it in memory
 		if (!Character.isLetter(s.charAt(0))) return false; 
 		for (int i=1; i<s.length(); i++) 
 			if (!Character.isLetter(s.charAt(i)) &&
@@ -130,9 +131,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Int.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidInt(String s) { 
 		try { 
@@ -143,9 +144,9 @@ public class DataUtils {
 		}
 	}
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Boolean.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidBoolean(String s) {
 		try {
@@ -157,9 +158,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Long.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidLong(String s) {
 		try {
@@ -171,9 +172,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Short.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidShort(String s) {
 		try {
@@ -185,18 +186,18 @@ public class DataUtils {
 	}
 
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Char.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidChar(String s) {
 		return s.length() == 1; 
 	}
 
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Byte.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidByte(String s) {
 		try {
@@ -207,6 +208,11 @@ public class DataUtils {
 		}
 	}
 
+	/**
+	 * Determines if the given String represents a valid Float.
+	 * @param s the string
+	 * @return true if valid, false otherwise
+	 */
 	public static boolean isValidFloat(String s) {
 		try {
 			Float.parseFloat(s); 
@@ -217,9 +223,9 @@ public class DataUtils {
 	}
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * Determines if the given String represents a valid Double.
+	 * @param s the string
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidDouble(String s) {
 		try {
@@ -232,11 +238,11 @@ public class DataUtils {
 
 
 	/**
-	 * 
-	 * @param month
-	 * @param day
-	 * @param year
-	 * @return
+	 * Determines if the given String represents a valid Date. 
+	 * @param month a byte representing the month
+	 * @param day a byte representing the day
+	 * @param year a short representing the year
+	 * @return true if valid, false otherwise
 	 */
 	public static boolean isValidDate(byte month, byte day, short year) { 
 		if (year < 0)
