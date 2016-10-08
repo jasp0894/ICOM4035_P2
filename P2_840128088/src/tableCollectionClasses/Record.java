@@ -7,16 +7,26 @@ import java.util.Scanner;
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
 
+/**
+ * Defines an object to represent Record as specified in the project description.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class Record {
 	private byte[] data; 
 	private TableSchema ts; 
+	
+	/**
+	 * Creates a new instance of this base on a table schema.
+	 * @param ts the table schema
+	 */
 	public Record(TableSchema ts) { 
 		data = new byte[ts.getDataRecordLength()]; 
 		this.ts = ts; 
 	}
 	
 	/**
-	 * read the data value corresponding to the selected attribute
+	 * Read the data value corresponding to the selected attribute
 	 * @param attrNumber index of the selected attribute in schema.. 0, 1, ...
 	 * @return the data value that is extracted from the internal array of bytes
 	 */
@@ -35,12 +45,20 @@ public class Record {
 		ais.writeDataValueToArrayOfBytes(data, ais.getDataOffset(), value);
 	}
 	
+	/**
+	 * Reads record from the given file -- a sequence of bytes beginning at current file pointer
+	 * @param file
+	 * @throws IOException
+	 */
 	public void readFromFile(RandomAccessFile file) throws IOException { 
-		// reads record from the given file -- a sequence of bytes beginning at current file pointer
+		// 
 		file.read(data);
 	}
 	
-	
+	/**
+	 * Reads data from user from an input scanner. 
+	 * @param input the input scanner
+	 */
 	public void readDataRecordFromUser(Scanner input) {
 		for (int i=0; i<ts.getNumberOfAttrs(); i++) { 
 			
@@ -56,10 +74,16 @@ public class Record {
 		}
 	}
 
+	/**
+	 * Write this record to a RandomAccessFile (RAF).
+	 * @param file the RAF
+	 * @throws IOException if an I/O error occurs.
+	 */
 	public void writeToFile(RandomAccessFile file) throws IOException { 
 		file.write(data);
 	}
 
+	
 	public String toString() { 
 		String s = "|"; 
 		int nAttrs = ts.getNumberOfAttrs();
