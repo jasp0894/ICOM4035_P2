@@ -23,7 +23,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("input9.txt");
+		String fname = new String("InputData"+ File.separator+ "input1.txt");
 
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
