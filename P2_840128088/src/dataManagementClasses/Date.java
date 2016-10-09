@@ -31,12 +31,26 @@ public class Date implements Comparable<Date> {
 		this.year = year; 
 		
 	}
+	/**
+	 * Gets the month of this.
+	 * @return month
+	 */
 	public byte getMonth() {
 		return month;
 	}
+	
+	/**
+	 * Gets the day of this.
+	 * @return the day
+	 */
 	public byte getDay() {
 		return day;
 	}
+	
+	/**
+	 * Gets the year of this. 
+	 * @return the year
+	 */
 	public short getYear() {
 		return year;
 	}
@@ -45,6 +59,11 @@ public class Date implements Comparable<Date> {
 		return String.format(DataUtils.DATEFORMAT, MONTHNAME[month-1], day, year); 
 	}
 	
+	/**
+	 * Gets the numbers of days for a given month.
+	 * @param month the month
+	 * @return number of days in the month.
+	 */
 	public static int nDays(int month) { 
 		return NDAYSPERMONTH[month]; 
 	}

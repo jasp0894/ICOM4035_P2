@@ -544,7 +544,9 @@ public class DataUtils {
 			return null;
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
+			return null;
+		}catch (Exception e){
 			return null;
 		}
 
