@@ -520,9 +520,10 @@ public class DataUtils {
 					if (value == null)
 						return null;
 
+					if(!(value instanceof Date)){
 					//double check for some
 					value = ts.getAttr(i1).readDataValueFromInputScanner(new Scanner(value.toString())); // try
-																											// to
+					}																			// to
 																											// read
 																											// the
 																											// same

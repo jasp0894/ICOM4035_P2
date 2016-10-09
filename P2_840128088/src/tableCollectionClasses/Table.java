@@ -129,6 +129,14 @@ public class Table {
 				}
 		
 	}
+	
+	/**
+	 * Gets the table schema of this.
+	 * @return table schema
+	 */
+	public TableSchema getTableSchema(){
+		return this.ts;
+	}
 /*
  	public static Table readTableDataFromFile(RandomAccessFile file) throws IOException {
  

@@ -1,6 +1,5 @@
 package p2MainClasses;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.util.Scanner;
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
 import generalUtilities.DataUtils;
-import tableCollectionClasses.Record;
 import tableCollectionClasses.Table;
 
 public class DataFilePopulator {
@@ -78,6 +76,7 @@ public class DataFilePopulator {
 			// code to add data (records)
 			System.out.println("It's time to add records containing data for each attribute!");
 			// read data for the records
+			ts = table.getTableSchema();
 			populateRecords();
 		}else{
 			System.out.println("\n****Sorry, It seems that File " +  this.fname + " is not valid. Try again! ");
