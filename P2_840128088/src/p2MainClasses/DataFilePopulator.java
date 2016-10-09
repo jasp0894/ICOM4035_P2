@@ -53,35 +53,15 @@ public class DataFilePopulator {
 
 		if (f.exists()) {
 
-			// check if it is a valid file according to this project specs
-			// if it is, then read its content, might be only the schema but
-			// could also be a whole table
-			// show its content
-
-			// readSchemaFromFile()
-			// isValidFile(f or raf)
-			// if not end with appropriate message
-			// if valid, then read its content readFileContent(r or raf)
-			// showFileContent()
-			
-
 			try {
 				raf = new RandomAccessFile(f, "rw");
 				
-				
-			
-				
-				
-				
-				
-				
-				this.ts = TableSchema.getInstance(raf);
-				this.table = new Table(ts);
-				
-				
-				
-		
-				
+				this.table = DataUtils.isValidProjectFile(raf); 
+				if(table ==null)
+					invalidFile=true;
+				else{
+					table.displayTable();
+				}
 				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -93,10 +73,9 @@ public class DataFilePopulator {
 			
 	
 			
-		} else {
-
+		}else
 			populateSchemaFromEmptyFile(f);
-		}
+		
 
 		if (!invalidFile) {
 			// code to add data (records)

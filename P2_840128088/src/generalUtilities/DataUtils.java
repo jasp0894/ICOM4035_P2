@@ -431,7 +431,13 @@ public class DataUtils {
 		// if it reaches here, then the date is valid as per the specs given
 		return true;
 	}
-
+	
+	
+	/**
+	 * Verify if the given file complies with this project specification for a file.
+	 * @param raf the random access file.
+	 * @return a table with the content of the raf if valid, null otherwise.
+	 */
 	public static Table isValidProjectFile(RandomAccessFile raf) {
 		int dOffset =0;
 		Table t;
@@ -445,8 +451,8 @@ public class DataUtils {
 			
 			//create a table schema with the given 
 			TableSchema ts = TableSchema.getInstance(nOfAttrs);
-			t = new Table(ts);
-
+			t = new Table(ts); //initialize the table with the table schema
+			//try to create the number of attributes given by nOfAttrs
 			for (int i = 0; i < nOfAttrs; i++) {
 				
 				AttributeInSchema ais= new AttributeInSchema(raf, dOffset);
@@ -457,17 +463,19 @@ public class DataUtils {
 				}
 				
 				if (!DataUtils.isValidName(ais.getName()))
-					return null; //the array of char was not a valid name
+					return null; //was not a valid name
+				
 				//at this point, the read attribute should be valid since it 
 				//contains a valid ID and name
 				//Therefore it can be added to the schema.
 				ts.addAttribute(ais);
 			}
 			//check if all file content has been read and therefore no records are given.
+			//If so, the table file would be valid.
 			if((raf.length() - raf.getFilePointer())== 1) return t;
 			
-			//check if rest of the file contain data records, and if it does check if 
-			//they are of the expected length given by the data types of all attributes.
+			//check if rest of the file contain data records, and if it does, then check if 
+			//they are of the expected length determined by the data types of all attributes.
 			if(((raf.length()-raf.getFilePointer())%ts.getDataRecordLength()) !=0) 
 				return null;
 			
@@ -490,13 +498,12 @@ public class DataUtils {
 				r.readFromFile(raf);
 				//try to read the values contained in the record. One value for each attribute
 				for (int i1 = 0; i1 < ts.getNumberOfAttrs(); i1++) {
-					Object value = r.readData(i1); // the values is read from the array of bytes of this record. be careful with long
+					Object value = r.readData(i1); // the value is read from the array of bytes of this record. be careful with long
 			
 						value = ts.getAttr(i1).readDataValueFromInputScanner(new Scanner(value.toString())); //try to read the same
-						//value converted to string from a scanner. If null, then could not parse he value.
+						//value converted to string from a scanner. If null, then could not parse the value and therefore is not valid.
 				
 						if(value == null) return null;	
-						
 						//if reaches here, then the value is valid
 				}
 			}
