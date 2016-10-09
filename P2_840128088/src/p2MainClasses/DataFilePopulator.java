@@ -56,7 +56,7 @@ public class DataFilePopulator {
 	//populate the file
 	private void populate() {
 
-		System.out.print("Welcome to DataFilePopulator!\n\n");
+		System.out.print("\nWelcome to DataFilePopulator!\n\n");
 
 		// create new File object
 		File f = new File(fname);
@@ -77,18 +77,13 @@ public class DataFilePopulator {
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			} 
 		}else
 			populateSchemaFromEmptyFile(f);
 		
 		//Check if file was valid or not
 		if (!invalidFile) {
 			// code to add data (records)
-			System.out.println("It's time to add records containing data for each attribute!");
 			// read data for the records
 			ts = table.getTableSchema();
 			this.table = new Table(ts);

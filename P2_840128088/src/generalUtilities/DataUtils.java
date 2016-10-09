@@ -445,6 +445,7 @@ public class DataUtils {
 		Table t;
 
 		try {
+			//if file does not even have two bytes for the attributes, then it is definitively invalid.
 			if (raf.length() < 2)
 				return null;
 
