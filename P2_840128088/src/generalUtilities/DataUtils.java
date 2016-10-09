@@ -1,5 +1,8 @@
 package generalUtilities;
 
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 import dataManagementClasses.Attribute;
@@ -27,6 +30,7 @@ import dataManagementClasses.TableSchema;
 import interfaces.DataReader;
 import interfaces.DataWriter;
 import tableCollectionClasses.Record;
+import tableCollectionClasses.Table;
 
 /**
  * This class provides a set of utilities or tools to aid in the execution of
@@ -206,7 +210,8 @@ public class DataUtils {
 	public static String readAttributeTypeFromInput(Scanner input) {
 		String answer;
 
-		System.out.print("\tEnter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
+		System.out
+				.print("\tEnter type for the attribute {byte, boolean, char, short, int, float,double, long, date}: ");
 		// read answer
 		answer = input.nextLine();
 
@@ -242,9 +247,13 @@ public class DataUtils {
 	}
 
 	/**
-	 * Request or read from input the data from a table schema to create a Record.
-	 * @param ts the table schema
-	 * @param input the input scanner
+	 * Request or read from input the data from a table schema to create a
+	 * Record.
+	 * 
+	 * @param ts
+	 *            the table schema
+	 * @param input
+	 *            the input scanner
 	 * @return a reference to a record constructed based upon ts.
 	 */
 	public static Record requestDataForRecord(TableSchema ts, Scanner input) {
@@ -422,14 +431,78 @@ public class DataUtils {
 		// if it reaches here, then the date is valid as per the specs given
 		return true;
 	}
-	//
-	// /**
-	// * Determines if the given file name exists in directory.
-	// * @param fname the name of the file
-	// * @return reference to the file if exists,
-	// */
-	// public static File exists(String fname){
-	//
-	//
-	// }
+
+	public static Table isValidProjectFile(RandomAccessFile raf) {
+		int dOffset =0;
+		Table t;
+		
+		try {
+			if (raf.length() < 2)
+				return null;
+
+			Short nOfAttrs = raf.readShort(); // number of attributes as per
+												// specification
+			
+			//create a table schema with the given 
+			TableSchema ts = TableSchema.getInstance(nOfAttrs);
+			t = new Table(ts);
+
+			for (int i = 0; i < nOfAttrs; i++) {
+				
+				AttributeInSchema ais= new AttributeInSchema(raf, dOffset);
+				try{
+					dOffset += ais.getDataSize();
+				}catch(IllegalArgumentException e){
+					return null; //the read attribute does not contain a valid ID.
+				}
+				
+				if (!DataUtils.isValidName(ais.getName()))
+					return null; //the array of char was not a valid name
+				//at this point, the read attribute should be valid since it 
+				//contains a valid ID and name
+				//Therefore it can be added to the schema.
+				ts.addAttribute(ais);
+			}
+			
+			//create a new record
+			Record r = new Record(ts);
+			//read record content from the file. 
+			r.readFromFile(raf);
+			//try to read the values contained in the record. One value for each attribute
+			for (int i = 0; i < ts.getNumberOfAttrs(); i++) {
+				Object value = r.readData(i); // the values is read from the array of bytes of this record. be careful with long
+		
+					value = ts.getAttr(i).readDataValueFromInputScanner(new Scanner(value.toString())); //try to read the same
+					//value converted to string from a scanner. If null, then could not parse he value.
+			
+					if(value == null) return null;	
+					
+					//if reaches here, then the value is valid
+			}
+			//if reaches here, then record is valid and can be added to the table
+			t.addRecord(r);
+			
+			
+			
+			//now we have to check that the read record complies with the project specs.
+			
+			
+			
+			
+			
+			
+		} 
+		// given file does not comply with specification
+		catch (EOFException e) {
+			return null;
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return null;
+		}
+		
+		return t;//if it reached this point, it must be valid
+
+	}
+
 }

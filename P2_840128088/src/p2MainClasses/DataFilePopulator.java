@@ -1,5 +1,6 @@
 package p2MainClasses;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,14 +68,19 @@ public class DataFilePopulator {
 			try {
 				raf = new RandomAccessFile(f, "rw");
 				
+				
+			
+				
+				
+				
+				
+				
 				this.ts = TableSchema.getInstance(raf);
 				this.table = new Table(ts);
 				
-				for(int i=0; i<ts.getNumberOfAttrs(); i++){
-					table.addRecord(new Record(ts));
-				}
 				
-				if(ts.ge)
+				
+		
 				
 				
 			} catch (FileNotFoundException e) {
@@ -101,6 +107,7 @@ public class DataFilePopulator {
 			System.out.println("\n****Sorry, It seems that File " +  this.fname + " is not valid. Try again! ");
 		}
 	}
+	
 
 	private void populateSchemaFromEmptyFile(File f) {
 		String answer, attributeName;
