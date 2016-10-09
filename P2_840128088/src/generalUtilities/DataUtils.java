@@ -463,34 +463,44 @@ public class DataUtils {
 				//Therefore it can be added to the schema.
 				ts.addAttribute(ais);
 			}
+			//check if all file content has been read and therefore no records are given.
+			if((raf.length() - raf.getFilePointer())== 1) return t;
 			
-			//create a new record
-			Record r = new Record(ts);
-			//read record content from the file. 
-			r.readFromFile(raf);
-			//try to read the values contained in the record. One value for each attribute
-			for (int i = 0; i < ts.getNumberOfAttrs(); i++) {
-				Object value = r.readData(i); // the values is read from the array of bytes of this record. be careful with long
-		
-					value = ts.getAttr(i).readDataValueFromInputScanner(new Scanner(value.toString())); //try to read the same
-					//value converted to string from a scanner. If null, then could not parse he value.
+			//check if rest of the file contain data records, and if it does check if 
+			//they are of the expected length given by the data types of all attributes.
+			if(((raf.length()-raf.getFilePointer())%ts.getDataRecordLength()) !=0) 
+				return null;
 			
-					if(value == null) return null;	
-					
-					//if reaches here, then the value is valid
+			//at this point we know that the file has data records of the expected length.
+			//we need to check if their content is valid 
+			//get the number of data records in file
+			long numberOfDataRecords = (raf.length()-raf.getFilePointer())/ts.getDataRecordLength();
+			long dataRecordsStartIndex = raf.getFilePointer();
+			
+			//read the rest of the file in the form of records.
+			t.readTableDataFromFile(raf);
+			
+			
+			//check if their content is valid record by record 
+			raf.seek(dataRecordsStartIndex);//set the file pointer at the starting position of all data records
+			for (int i = 0; i < numberOfDataRecords; i++) {
+				//create a copy of an existing record
+				Record r = t.getRecord(i);	
+				//read record content from the file. Even though the record already has its data, this way we can test its content.
+				r.readFromFile(raf);
+				//try to read the values contained in the record. One value for each attribute
+				for (int i1 = 0; i1 < ts.getNumberOfAttrs(); i1++) {
+					Object value = r.readData(i1); // the values is read from the array of bytes of this record. be careful with long
+			
+						value = ts.getAttr(i1).readDataValueFromInputScanner(new Scanner(value.toString())); //try to read the same
+						//value converted to string from a scanner. If null, then could not parse he value.
+				
+						if(value == null) return null;	
+						
+						//if reaches here, then the value is valid
+				}
 			}
-			//if reaches here, then record is valid and can be added to the table
-			t.addRecord(r);
-			
-			
-			
-			//now we have to check that the read record complies with the project specs.
-			
-			
-			
-			
-			
-			
+		
 		} 
 		// given file does not comply with specification
 		catch (EOFException e) {
