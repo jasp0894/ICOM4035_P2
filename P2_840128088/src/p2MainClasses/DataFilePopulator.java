@@ -23,7 +23,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("InputData"+ File.separator+ "input1.txt");
+		String fname = new String("InputData"+ File.separator + args[0]);
 
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
@@ -77,6 +77,7 @@ public class DataFilePopulator {
 			System.out.println("It's time to add records containing data for each attribute!");
 			// read data for the records
 			ts = table.getTableSchema();
+			this.table = new Table(ts);
 			populateRecords();
 		}else{
 			System.out.println("\n****Sorry, It seems that File " +  this.fname + " is not valid. Try again! ");
