@@ -170,7 +170,6 @@ public class DataFilePopulator {
 				// write to raf
 				try {
 					table.writeTableDataToFile(raf);
-					table.displayTable();
 					raf.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -457,8 +457,9 @@ public class DataUtils {
 			// try to create the number of attributes given by nOfAttrs
 			for (int i = 0; i < nOfAttrs; i++) {
 
-				AttributeInSchema ais = new AttributeInSchema(raf, dOffset);
+				AttributeInSchema ais;
 				try {
+					ais = new AttributeInSchema(raf, dOffset);
 					dOffset += ais.getDataSize();
 				} catch (IllegalArgumentException e) {
 					return null; // the read attribute does not contain a valid
