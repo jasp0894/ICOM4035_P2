@@ -28,14 +28,14 @@ public class CharDataReader implements DataReader {
 	@Override
 	public Character readDataFromArrayOfBytes(byte[] b, int index) {
 		// TODO Auto-generated method stub
-		int value = 0; 
+		char value = 0; 
 		int lSB; 
 		for (int i=0; i < CHARSIZE; i++) { 
-			value = value << 8; 
+			value = (char) (value << 8); 
 			lSB = 0x000000ff & b[index + i];
-			value = value | lSB; 
+			value = (char) (value | lSB); 
 		}
-		return String.valueOf(value).charAt(0);	
+		return value;	
 	}
 	
 	@Override
