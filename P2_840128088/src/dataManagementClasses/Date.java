@@ -2,6 +2,11 @@ package dataManagementClasses;
 
 import generalUtilities.DataUtils;
 
+/**
+ * Date defines a data type to hold the date in format month, day, year.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class Date implements Comparable<Date> {
 	private static int NDAYSPERMONTH[] = {31, 28, 31, 30, 31, 30, 
 		                                  31, 31, 30, 31, 30, 31}; 
@@ -10,6 +15,14 @@ public class Date implements Comparable<Date> {
 	private byte month, day; 
 	private short year; 
 	
+	
+	/**
+	 * Creates an instance of this with given month, day and year.
+	 * @param month the month
+	 * @param day the day
+	 * @param year the year 
+	 * @throws InvalidDateException if given date is not valid as per the specs of this project.
+	 */
 	public Date(byte month, byte day, short year) throws InvalidDateException { 
 		if (!DataUtils.isValidDate(month, day, year))
 			throw new InvalidDateException("Given date is not valid."); 

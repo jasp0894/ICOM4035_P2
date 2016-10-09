@@ -4,7 +4,7 @@ import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
 /**
- * 
+ * Defines a data writer for Boolean data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -12,13 +12,15 @@ public class ByteDataWriter implements DataWriter {
 
 	public static final ByteDataWriter INSTANCE = new ByteDataWriter();
 	
-	/**
-	 * 
-	 */
+	
+	//singleton
 	private ByteDataWriter() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * write byte data to array of bytes.
+	 */
 	@Override
 	public void writeDataToArrayOfBytes(byte[] a, int starting, Object value) {
 		// TODO Auto-generated method stub

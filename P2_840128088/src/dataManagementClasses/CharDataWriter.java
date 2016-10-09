@@ -5,8 +5,8 @@ package dataManagementClasses;
 
 import generalUtilities.DataUtils;
 import interfaces.DataWriter;
-
 /**
+ * Defines a data writer for Character data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -14,10 +14,9 @@ public class CharDataWriter implements DataWriter {
 
 	private static final int CHARSIZE = Character.BYTES;
 	public static final CharDataWriter INSTANCE = new CharDataWriter();
-	/**
-	 * 
-	 */
-	public CharDataWriter() {
+	
+	//singleton
+	private CharDataWriter() {
 		// TODO Auto-generated constructor stub
 	}
 

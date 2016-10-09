@@ -8,6 +8,7 @@ import java.util.Scanner;
 import interfaces.DataReader;
 
 /**
+ * Defines a DataReader for Character data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -15,9 +16,8 @@ public class CharDataReader implements DataReader {
 
 	private static final int CHARSIZE = Character.BYTES;
 	public static final CharDataReader INSTANCE = new CharDataReader();
-	/**
-	 * 
-	 */
+	
+	//singleton
 	private CharDataReader() {
 		// TODO Auto-generated constructor stub
 	}

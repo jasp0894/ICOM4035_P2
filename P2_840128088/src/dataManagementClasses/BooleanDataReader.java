@@ -15,8 +15,9 @@ public class BooleanDataReader implements DataReader {
 	
 	private BooleanDataReader() {}; 
 
+	
 	/**
-	 * Read
+	 * Read boolean data from array of bytes.
 	 */
 	public Boolean readDataFromArrayOfBytes(byte[] b, int index) {
 		return b[index] != 0;  
