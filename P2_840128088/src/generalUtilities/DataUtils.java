@@ -431,84 +431,111 @@ public class DataUtils {
 		// if it reaches here, then the date is valid as per the specs given
 		return true;
 	}
-	
-	
+
 	/**
-	 * Verify if the given file complies with this project specification for a file.
-	 * @param raf the random access file.
+	 * Verify if the given file complies with this project specification for a
+	 * file.
+	 * 
+	 * @param raf
+	 *            the random access file.
 	 * @return a table with the content of the raf if valid, null otherwise.
 	 */
 	public static Table isValidProjectFile(RandomAccessFile raf) {
-		int dOffset =0;
+		int dOffset = 0;
 		Table t;
-		
+
 		try {
 			if (raf.length() < 2)
 				return null;
 
 			Short nOfAttrs = raf.readShort(); // number of attributes as per
 												// specification
-			
-			//create a table schema with the given 
+
+			// create a table schema with the given
 			TableSchema ts = TableSchema.getInstance(nOfAttrs);
-			t = new Table(ts); //initialize the table with the table schema
-			//try to create the number of attributes given by nOfAttrs
+
+			// try to create the number of attributes given by nOfAttrs
 			for (int i = 0; i < nOfAttrs; i++) {
-				
-				AttributeInSchema ais= new AttributeInSchema(raf, dOffset);
-				try{
+
+				AttributeInSchema ais = new AttributeInSchema(raf, dOffset);
+				try {
 					dOffset += ais.getDataSize();
-				}catch(IllegalArgumentException e){
-					return null; //the read attribute does not contain a valid ID.
+				} catch (IllegalArgumentException e) {
+					return null; // the read attribute does not contain a valid
+									// ID.
 				}
-				
+
 				if (!DataUtils.isValidName(ais.getName()))
-					return null; //was not a valid name
-				
-				//at this point, the read attribute should be valid since it 
-				//contains a valid ID and name
-				//Therefore it can be added to the schema.
+					return null; // was not a valid name
+
+				// at this point, the read attribute should be valid since it
+				// contains a valid ID and name
+				// Therefore it can be added to the schema.
 				ts.addAttribute(ais);
 			}
-			//check if all file content has been read and therefore no records are given.
-			//If so, the table file would be valid.
-			if((raf.length() - raf.getFilePointer())== 1) return t;
-			
-			//check if rest of the file contain data records, and if it does, then check if 
-			//they are of the expected length determined by the data types of all attributes.
-			if(((raf.length()-raf.getFilePointer())%ts.getDataRecordLength()) !=0) 
+
+			t = new Table(ts); // initialize the table with the table schema
+			// check if all file content has been read and therefore no records
+			// are given.
+			// If so, the table file would be valid.
+			if ((raf.length() - raf.getFilePointer()) == 1)
+				return t;
+
+			// check if rest of the file contain data records, and if it does,
+			// then check if
+			// they are of the expected length determined by the data types of
+			// all attributes.
+			if (((raf.length() - raf.getFilePointer()) % ts.getDataRecordLength()) != 0)
 				return null;
-			
-			//at this point we know that the file has data records of the expected length.
-			//we need to check if their content is valid 
-			//get the number of data records in file
-			long numberOfDataRecords = (raf.length()-raf.getFilePointer())/ts.getDataRecordLength();
+
+			// at this point we know that the file has data records of the
+			// expected length.
+			// we need to check if their content is valid
+			// get the number of data records in file
+			long numberOfDataRecords = (raf.length() - raf.getFilePointer()) / ts.getDataRecordLength();
 			long dataRecordsStartIndex = raf.getFilePointer();
-			
-			//read the rest of the file in the form of records.
+
+			// read the rest of the file in the form of records.
 			t.readTableDataFromFile(raf);
-			
-			
-			//check if their content is valid record by record 
-			raf.seek(dataRecordsStartIndex);//set the file pointer at the starting position of all data records
+
+			// check if their content is valid record by record
+			raf.seek(dataRecordsStartIndex);// set the file pointer at the
+											// starting position of all data
+											// records
 			for (int i = 0; i < numberOfDataRecords; i++) {
-				//create a copy of an existing record
-				Record r = t.getRecord(i);	
-				//read record content from the file. Even though the record already has its data, this way we can test its content.
+				// create a copy of an existing record
+				Record r = t.getRecord(i);
+				// read record content from the file. Even though the record
+				// already has its data, this way we can test its content.
 				r.readFromFile(raf);
-				//try to read the values contained in the record. One value for each attribute
+				// try to read the values contained in the record. One value for
+				// each attribute
 				for (int i1 = 0; i1 < ts.getNumberOfAttrs(); i1++) {
-					Object value = r.readData(i1); // the value is read from the array of bytes of this record. be careful with long
-			
-						value = ts.getAttr(i1).readDataValueFromInputScanner(new Scanner(value.toString())); //try to read the same
-						//value converted to string from a scanner. If null, then could not parse the value and therefore is not valid.
-				
-						if(value == null) return null;	
-						//if reaches here, then the value is valid
+					Object value = r.readData(i1); // the value is read from the
+													// array of bytes of this
+													// record. be careful with
+													// long
+
+					//check if the data could not be converted to any of the project's data types
+					if (value == null)
+						return null;
+
+					//double check for some
+					value = ts.getAttr(i1).readDataValueFromInputScanner(new Scanner(value.toString())); // try
+																											// to
+																											// read
+																											// the
+																											// same
+					// value converted to string from a scanner. If null, then
+					// could not parse the value and therefore is not valid.
+
+					if (value == null)
+						return null; 
+
 				}
 			}
-		
-		} 
+
+		}
 		// given file does not comply with specification
 		catch (EOFException e) {
 			return null;
@@ -517,8 +544,8 @@ public class DataUtils {
 			e1.printStackTrace();
 			return null;
 		}
-		
-		return t;//if it reached this point, it must be valid
+
+		return t;// if it reached this point, it must be valid
 
 	}
 

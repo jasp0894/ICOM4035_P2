@@ -26,7 +26,7 @@ public class DateDataReader implements DataReader {
 	public Object readDataFromInputScanner(Scanner input) {
 
 		try{ 
-			System.out.print("\tmonth: "); 
+			System.out.print("\n\tmonth: "); 
 			byte month = input.nextByte(); 
 
 			System.out.print("\tday: "); 

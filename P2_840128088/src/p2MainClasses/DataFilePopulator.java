@@ -52,7 +52,6 @@ public class DataFilePopulator {
 		boolean invalidFile = false;
 
 		if (f.exists()) {
-
 			try {
 				raf = new RandomAccessFile(f, "rw");
 				
@@ -70,13 +69,11 @@ public class DataFilePopulator {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-	
-			
+
 		}else
 			populateSchemaFromEmptyFile(f);
 		
-
+		//Check if file was valid or not
 		if (!invalidFile) {
 			// code to add data (records)
 			System.out.println("It's time to add records containing data for each attribute!");
@@ -87,7 +84,10 @@ public class DataFilePopulator {
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @param f
+	 */
 	private void populateSchemaFromEmptyFile(File f) {
 		String answer, attributeName;
 		int attributeID, dataOffset = 0;
@@ -146,6 +146,9 @@ public class DataFilePopulator {
 
 	}
 
+	/**
+	 * 
+	 */
 	private void populateRecords() {
 		String answer;
 		boolean moreRecordsToAdd = true;
