@@ -27,14 +27,15 @@ public class CharDataWriter implements DataWriter {
 	@Override
 	public void writeDataToArrayOfBytes(byte[] b, int index, Object rv) {
 		Character v = (Character) rv; 
-		int value = Integer.parseInt(Character.toString(v));  //casting from Character to int
+		
+		char value = v;//Integer.parseInt(Character.toString(v), 16);  //casting from Character to int
 		int lSB; 
 		for (int i=0; i < CHARSIZE; i++) { 
 			lSB = 0x000000ff & value;
-			value = value >> 8; 
+			value = (char) (value >> 8); 
 		//Now we have the least significant byte of value (lSB), so we can add it to the array of bytes
 		//BUT, the array of bytes follows BIG ENDIAN notation, so we will have to add lSB to highest index of b
-		//allocated for this value. The highest index for this value is index+FLOATSIZE-1. The next bytes will 
+		//allocated for this value. The highest index for this value is index+CHARSIZE-1. The next bytes will 
 		//be added kind of backwards, that explains the - i.
 		    b[index + CHARSIZE - i - 1] = (byte) (lSB & 0x000000ff); 
 		}
