@@ -4,12 +4,20 @@ import java.util.Scanner;
 
 import interfaces.DataReader;
 
+/**
+ * Defines a DataReader for Boolean data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class BooleanDataReader implements DataReader {
 
 	public static final BooleanDataReader INSTANCE = new BooleanDataReader(); 
 	
 	private BooleanDataReader() {}; 
 
+	/**
+	 * Read
+	 */
 	public Boolean readDataFromArrayOfBytes(byte[] b, int index) {
 		return b[index] != 0;  
 	}
