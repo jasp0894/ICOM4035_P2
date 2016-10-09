@@ -12,6 +12,14 @@ import dataManagementClasses.TableSchema;
 import generalUtilities.DataUtils;
 import tableCollectionClasses.Table;
 
+/**
+ * This class calls the execution of data file population according to the project specs.
+ * The population could be done in two ways: Reading all data from the user or
+ * reading part of the content from a valid file and then read more data from user.
+ * 
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class DataFilePopulator {
 
 	private RandomAccessFile raf;
@@ -31,6 +39,11 @@ public class DataFilePopulator {
 
 	}
 
+	/**
+	 * Creates an instance of this with a file name and an input scanner.
+	 * @param fName the file
+	 * @param input the scanner
+	 */
 	public DataFilePopulator(String fName, Scanner input) {
 		// TODO Auto-generated constructor stub
 
@@ -40,6 +53,7 @@ public class DataFilePopulator {
 
 	}
 
+	//populate the file
 	private void populate() {
 
 		System.out.print("Welcome to DataFilePopulator!\n\n");
@@ -85,8 +99,8 @@ public class DataFilePopulator {
 	}
 	
 	/**
-	 * 
-	 * @param f
+	 *Populate the schema of an empty file, as per the specifications.
+	 * @param f the empty file.
 	 */
 	private void populateSchemaFromEmptyFile(File f) {
 		String answer, attributeName;
@@ -147,7 +161,7 @@ public class DataFilePopulator {
 	}
 
 	/**
-	 * 
+	 * Request data for records.
 	 */
 	private void populateRecords() {
 		String answer;
