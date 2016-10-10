@@ -100,25 +100,26 @@ Steps to run in eclipse IDE:
 
 (1) Create an empty java project.
 
-(2) Import P1_4035_840128088_161.zip and save it on the empty folder.
+(2) Import P2_4035_840128088_161.zip and save it on the empty folder.
 
 (3) Go to P1_840128088/src and drag and drop all its content onto
     the default package created automatically for the java project.
     Now called src too.
 
-(4) Go to src of the  created java project and open testerClasses or
-    experimentalClasses package.
+(4) Go to src of the  created java project and open p2MainClasses
 
-(5) Open, for example, testerClasses/MapOrdered.java and run it.
-    The same applies for ~/experimentalClasses/ExperimentalTrials.java
+(5) Open, for example, DataFilePopulator.java and go to Run Configurations
+	look for Arguments tab and type the name of the text file you wish
+	to work on and click run. If the file does not exist, a new one will 
+	be created with the given name. The file will be inside InputData folder.
 
 
 Steps to run from CMD:
 
 (1) Navigate to a workspace or directory that contains the project
-    named, say, p1j.
+    named, say, p2j.
 
-(2) Go to ~/p1j/src/testerClasses from the command line prompt
+(2) Go to ~/p2j/src/testerClasses from the command line prompt
 
 (3) call the java compiler to compile all source files in that folder.
    
