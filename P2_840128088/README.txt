@@ -3,6 +3,7 @@
 Author: Jesus Antonio Sanchez Perez
 File: ICOM4035 Data Structures
 Version: 2.0
+Phase: 1.0
 SN: 840-12-8088
 
 *****************************************************************
@@ -21,7 +22,7 @@ The package named p2MainClasses contain the two main classes of the
 project: DataFilePopulator.java and TableAnalyzer.java. 
 
 ------------------------------------------------------------------
-			GENERAL DESCRIPTION
+			          GENERAL DESCRIPTION
 ------------------------------------------------------------------
 
 
@@ -90,7 +91,7 @@ P2_4035_840128088_161/P2_840128088      contains all project's contents
 
 
 ------------------------------------------------------------------
-		      EXECUTION INSTRUCTIONS
+		             EXECUTION INSTRUCTIONS
 ------------------------------------------------------------------
 
 ~/p2MainClasses contains two classes that provide main method.
@@ -102,14 +103,14 @@ Steps to run in eclipse IDE:
 
 (2) Import P2_4035_840128088_161.zip and save it on the empty folder.
 
-(3) Go to P1_840128088/src and drag and drop all its content onto
+(3) Go to P2_840128088/src and drag and drop all its content onto
     the default package created automatically for the java project.
     Now called src too.
 
 (4) Go to src of the  created java project and open p2MainClasses
 
-(5) Open, for example, DataFilePopulator.java and go to Run Configurations
-	look for Arguments tab and type the name of the text file you wish
+(5) Open, for example, DataFilePopulator.java and go to "Run Configurations"
+	look for "Arguments" tab and type the name of the text file you wish
 	to work on and click run. If the file does not exist, a new one will 
 	be created with the given name. The file will be inside InputData folder.
 
@@ -119,27 +120,28 @@ Steps to run from CMD:
 (1) Navigate to a workspace or directory that contains the project
     named, say, p2j.
 
-(2) Go to ~/p2j/src/testerClasses from the command line prompt
+(2) Go to ~/p2j/src from the command line prompt
 
-(3) call the java compiler to compile all source files in that folder.
-   
-     ~/p1j/src/testerClasses> javac -cp .. *.java
-     
-    *NOTE: make sure to leave the whitespaces
+(3) From there execute the JVM by typing 
+	java -classpath bin p2MainClasses.DataFilePopulator fname
+	
+	where fname is the name of any file (existing or not) that you
+	are going to work on. If exists and does not comply with the
+	project specifications for a valid file, then the program 
+	will end with an appropriate message. 
 
-(5) Go back to ~/p1j/src by typing
-
-     ~/p1j/src/testerClasses> cd ..
-
-(6) From there, execute the JVM to run any of the strategies:
-    For example,
-
-    ~/p1j/src>java testerClasses/MapTester
-
-(7) The same concept (steps 2 to 6) applies for the execution of
-	 ~/experimentalClasses/ExperimentalTrials.java
-    where the package will be experimentalClasses instead of
-    testerClasses.
+(4) Another option is to type
+	java -classpath bin p2MainClasses.DataFilePopulator fname < textfile
+	
+	if fname does not exist and textfile is a text file containing all the
+	values that the user would have entered on his/her interaction with 
+	the program, then it should create a table in a random access file
+	named fname. 
+	
+	
+(5) The same concept (steps 2 to 4) applies for the execution of
+	 ~/p2MainClasses/TableAnalyzer.java
+  
 	
 
 
