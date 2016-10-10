@@ -76,7 +76,7 @@ public class DataFilePopulator {
 				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
 			} 
 		}else
 			populateSchemaFromEmptyFile(f);
@@ -106,7 +106,7 @@ public class DataFilePopulator {
 			raf = new RandomAccessFile(f, "rw");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 
 		System.out.print("----File " + fname + " has been created.\n");

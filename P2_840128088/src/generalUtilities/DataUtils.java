@@ -45,7 +45,7 @@ public class DataUtils {
 	public static String CHARFORMAT = "%" + VALUEWIDE + "c";
 	public static String INTEGERFORMAT = "%" + VALUEWIDE + "d";
 	public static String BOOLEANFORMAT = "%" + VALUEWIDE + "s";
-	public static String FLOATFORMAT = "%" + VALUEWIDE + ".2f";
+	public static String FLOATFORMAT = "%" + VALUEWIDE + ".6f";
 	public static String DATEFORMAT = "%3s/%02d/%4d";
 
 	public static final TYPE[] TYPEList = {
