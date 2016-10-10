@@ -8,6 +8,7 @@ import java.util.Scanner;
 import interfaces.DataReader;
 
 /**
+ * Defines a DataReader for Short data types.
  * @author J.A. Sanchez Perez
  *
  */

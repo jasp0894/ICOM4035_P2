@@ -4,6 +4,13 @@ import java.util.Scanner;
 
 import interfaces.DataReader;
 
+
+
+/**
+ * Defines a DataReader for Float data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class FloatDataReader implements DataReader {
 
 	private static final int FLOATSIZE = Float.BYTES; 

@@ -5,13 +5,22 @@ import java.util.Scanner;
 import generalUtilities.DataUtils;
 import interfaces.DataReader;
 
+/**
+ * Defines a DataReader for Data data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class DateDataReader implements DataReader {
 
 	public static final DateDataReader INSTANCE = new DateDataReader(); 
 	
+	//singleton
 	private DateDataReader() {}; 
 
 	
+	/**
+	 * read Date data types from array bytes.
+	 */
 	public Date readDataFromArrayOfBytes(byte[] b, int index) {
 		try {
 			return new Date(b[index], b[index+1], ShortDataReader.INSTANCE.readDataFromArrayOfBytes(b, index+2));

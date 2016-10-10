@@ -3,11 +3,17 @@ package dataManagementClasses;
 import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
+/**
+ * Defines a DataReader for Integer data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class IntDataWriter implements DataWriter {
 
 	private static final int INTSIZE = Integer.BYTES; 
 	public static final IntDataWriter INSTANCE = new IntDataWriter(); 
 	
+	//singleton
 	private IntDataWriter() {}; 
 	
 	public void writeDataToArrayOfBytes(byte[] b, int index, Object rvalue) {

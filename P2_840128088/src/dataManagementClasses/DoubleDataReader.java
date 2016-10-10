@@ -4,10 +4,7 @@ import java.util.Scanner;
 import interfaces.DataReader;
 
 /**
- * 
- */
-
-/**
+ * Defines a DataReader for Double data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -15,9 +12,9 @@ public class DoubleDataReader implements DataReader {
 
 	private static final int DOUBLESIZE = Double.BYTES;
 	public static final DoubleDataReader INSTANCE = new DoubleDataReader();
-	/**
-	 * 
-	 */
+
+
+	//singleton
 	private DoubleDataReader() {
 		// TODO Auto-generated constructor stub
 	}

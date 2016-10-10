@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 import interfaces.DataReader;
 
+
 /**
+ * Defines a DataReader for Long data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -15,9 +17,8 @@ public class LongDataReader implements DataReader {
 
 	private static final int LONGSIZE = Long.BYTES;
 	public static final LongDataReader INSTANCE = new LongDataReader();
-	/**
-	 * 
-	 */
+	
+	//singleton
 	private LongDataReader() {
 		// TODO Auto-generated constructor stub
 	}

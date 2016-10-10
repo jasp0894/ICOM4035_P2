@@ -7,6 +7,7 @@ import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
 /**
+ * Defines a Data Writer for Double data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -14,9 +15,9 @@ public class DoubleDataWriter implements DataWriter {
 
 	private static final int DOUBLESIZE = Double.BYTES;
 	public static final DoubleDataWriter INSTANCE = new DoubleDataWriter();
-	/**
-	 * 
-	 */
+
+
+	//singleton
 	private DoubleDataWriter() {
 		// TODO Auto-generated constructor stub
 	}

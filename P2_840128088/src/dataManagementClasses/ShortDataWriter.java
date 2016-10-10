@@ -7,6 +7,7 @@ import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
 /**
+ * Defines a DataWriter for Short data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -15,12 +16,12 @@ public class ShortDataWriter implements DataWriter {
 	private static final int SHORTSIZE = Short.BYTES;
 	public static final ShortDataWriter INSTANCE = new ShortDataWriter();//singleton object
 	
-	/**
-	 * 
-	 */
+	
+	//singleton
 	private ShortDataWriter() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	public void writeDataToArrayOfBytes(byte[] b, int index, Object rv) {
 		Short v = (Short) rv; 
 		int value = (int) v;  //casting from short(2 bytes) to int (4bytes)

@@ -1,14 +1,22 @@
 package dataManagementClasses;
 
-import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
+/**
+ * Defines a data writer for Data data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class DateDataWriter implements DataWriter {
 
 	public static final DateDataWriter INSTANCE = new DateDataWriter(); 
 	
+	//singleton
 	private DateDataWriter() {}; 
 
+	/**
+	 * Write Date data type to array of bytes.
+	 */
 	public void writeDataToArrayOfBytes(byte[] b, int index, Object  rd) {
 		Date d = (Date) rd; 
 		ByteDataWriter.INSTANCE.writeDataToArrayOfBytes(b, index, d.getMonth());

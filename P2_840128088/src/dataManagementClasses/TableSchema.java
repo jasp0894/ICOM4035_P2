@@ -55,14 +55,6 @@ public class TableSchema {
 	}
 	
 	/**
-	 * 
-	 * @return
-	 */
-	public boolean isValid() { 
-		return false; 
-	}
-	
-	/**
 	 * Creates an instance of this class.
 	 * @param n number of attributes to initiate an instance of this.
 	 * @return the instance of this.

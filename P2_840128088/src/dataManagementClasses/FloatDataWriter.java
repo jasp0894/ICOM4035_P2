@@ -3,13 +3,22 @@ package dataManagementClasses;
 import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
+/**
+ * Defines a Data Writer for Float data types.
+ * @author J.A. Sanchez Perez
+ *
+ */
 public class FloatDataWriter implements DataWriter{
 
 	private static final int FLOATSIZE = Float.BYTES; 
 	public static final FloatDataWriter INSTANCE = new FloatDataWriter(); 
 	
+	//singleton
 	private FloatDataWriter() {}; 
 	
+	/**
+	 * Write Float data to array of bytes.
+	 */
 	public void writeDataToArrayOfBytes(byte[] b, int index, Object rv) {
 		Float v = (Float) rv; 
 		int value = Float.floatToIntBits(v); 

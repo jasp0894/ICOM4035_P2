@@ -4,14 +4,13 @@
 package dataManagementClasses;
 
 /**
+ * Specify a new exception for Data data type handling.
  * @author J.A. Sanchez Perez
  *
  */
 public class InvalidDateException extends Exception {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -6,7 +6,9 @@ package dataManagementClasses;
 import generalUtilities.DataUtils;
 import interfaces.DataWriter;
 
+
 /**
+ * Defines a DataWriter for Long data types.
  * @author J.A. Sanchez Perez
  *
  */
@@ -14,9 +16,9 @@ public class LongDataWriter implements DataWriter {
 
 	private static final int LONGSIZE = Long.BYTES;
 	public static final LongDataWriter INSTANCE = new LongDataWriter();
-	/**
-	 * 
-	 */
+
+
+	//singleton
 	private LongDataWriter() {
 		// TODO Auto-generated constructor stub
 	}
