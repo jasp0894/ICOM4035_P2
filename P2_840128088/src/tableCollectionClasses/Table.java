@@ -119,15 +119,12 @@ public class Table {
 	 * @throws IOException if an IO error occurs.
 	 */
 	public void writeTableDataToFile(RandomAccessFile file) throws IOException {
-		
-		
 		//file pointer is assumed to be just after the schema.
 		
 				for (int dr = 0; dr < rList.size(); dr++) {
 					Record record = this.getRecord(dr); 
 					record.writeToFile(file); 
 				}
-		
 	}
 	
 	/**
