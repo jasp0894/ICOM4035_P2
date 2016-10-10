@@ -1,10 +1,10 @@
 package dataManagementClasses;
 
-import generalUtilities.DataUtils;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+
+import generalUtilities.DataUtils;
 
 /**
  * Defines an object for the schema of the table, which holds a list of attributes.

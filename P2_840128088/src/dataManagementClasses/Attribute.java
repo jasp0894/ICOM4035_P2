@@ -1,9 +1,9 @@
 package dataManagementClasses;
 
-import generalUtilities.DataUtils;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import generalUtilities.DataUtils;
 
 /**
  * 

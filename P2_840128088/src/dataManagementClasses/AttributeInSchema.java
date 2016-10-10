@@ -1,12 +1,12 @@
 package dataManagementClasses;
 
-import generalUtilities.DataUtils;
-import interfaces.DataReader;
-import interfaces.DataWriter;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
+
+import generalUtilities.DataUtils;
+import interfaces.DataReader;
+import interfaces.DataWriter;
 
 /**
  * Specifies a new Attribute as per the specification of project's schema concept.
