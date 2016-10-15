@@ -150,6 +150,7 @@ public class Table {
 		s += "\n"; 
 		
 		for (int i=0; i<= 3* DataUtils.VALUEWIDE+2; i++) s+='='; 
+		s += "\n"; 
 		
 		//fill table data
 		for(int i=0; i< ts.getNumberOfAttrs(); i++){

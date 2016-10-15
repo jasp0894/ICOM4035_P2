@@ -48,7 +48,7 @@ public class TableAnalyzer {
 		System.out.print("\nWelcome to Table Analyzer!\n\n");
 
 		// create new File object
-		File f = new File(fname);
+		File f = new File("InputData"+ File.separator + fname);
 
 		boolean invalidFile = false;
 		//check if file exists

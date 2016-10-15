@@ -31,7 +31,7 @@ public class DataFilePopulator {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String fname = new String("InputData"+ File.separator + args[0]);
+		String fname = new String(args[0]);
 
 		DataFilePopulator datafp = new DataFilePopulator(fname, in);
 
@@ -59,7 +59,7 @@ public class DataFilePopulator {
 		System.out.print("\nWelcome to DataFilePopulator!\n\n");
 
 		// create new File object
-		File f = new File(fname);
+		File f = new File("InputData"+ File.separator + fname);
 
 		boolean invalidFile = false;
 
