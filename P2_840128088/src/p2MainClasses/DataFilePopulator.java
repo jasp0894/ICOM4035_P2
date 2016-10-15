@@ -67,7 +67,7 @@ public class DataFilePopulator {
 			try {
 				raf = new RandomAccessFile(f, "rw");
 				
-				this.table = DataUtils.isValidProjectFile(raf); 
+				this.table = DataUtils.isValidProjectFile(raf, "p"); 
 				if(table ==null)
 					invalidFile=true;
 				else{

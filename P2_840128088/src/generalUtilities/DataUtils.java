@@ -45,7 +45,7 @@ public class DataUtils {
 	public static String CHARFORMAT = "%" + VALUEWIDE + "c";
 	public static String INTEGERFORMAT = "%" + VALUEWIDE + "d";
 	public static String BOOLEANFORMAT = "%" + VALUEWIDE + "s";
-	public static String FLOATFORMAT = "%" + VALUEWIDE + ".6f";
+	public static String FLOATFORMAT = "%" + VALUEWIDE + ".3f";
 	public static String DATEFORMAT = "%3s/%02d/%4d";
 
 	public static final TYPE[] TYPEList = {
@@ -440,7 +440,7 @@ public class DataUtils {
 	 *            the random access file.
 	 * @return a table with the content of the raf if valid, null otherwise.
 	 */
-	public static Table isValidProjectFile(RandomAccessFile raf) {
+	public static Table isValidProjectFile(RandomAccessFile raf, String mode) {
 		int dOffset = 0;
 		Table t;
 
@@ -479,9 +479,14 @@ public class DataUtils {
 			t = new Table(ts); // initialize the table with the table schema
 			// check if all file content has been read and therefore no records
 			// are given.
-			// If so, the table file would be valid.
-			if ((raf.length() - raf.getFilePointer()) == 1)
-				return t;
+			// If so, the table file would be valid in populate mode ("p"), false otherwise
+			if (((raf.length() - raf.getFilePointer()) == 1)){
+				if(mode.equals("p"))
+					return t;
+				else
+					return null;
+			}
+				
 
 			// check if rest of the file contain data records, and if it does,
 			// then check if
