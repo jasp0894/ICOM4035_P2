@@ -47,7 +47,12 @@ public class ValueInTuple {
 
 
 	public boolean equals(Object other){
-		return false;
+		if(!(other instanceof ValueInTuple)) return false;
+		
+		//compare values. All data types managed in this project implements the equals method.
+		//
+		return this.value.equals(other);
+		
 	}
 	
 

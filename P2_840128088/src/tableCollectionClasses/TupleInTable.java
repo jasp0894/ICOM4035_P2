@@ -20,15 +20,15 @@ public class TupleInTable extends Tuple {
 		this.ocurrence=0;
 	}
 	/**
-	 * Get the ocurrence of this.
-	 * @return the ocurrence
+	 * Get the occurrence of this.
+	 * @return the occurrence
 	 */
 	public int getOcurrence() {
 		return ocurrence;
 	}
 	/**
-	 * Sets the ocurrence of this.
-	 * @param ocurrence the ocurrence to set
+	 * Sets the occurrence of this.
+	 * @param ocurrence the occurrence to set
 	 */
 	public void setOcurrence(int ocurrence) {
 		this.ocurrence = ocurrence;

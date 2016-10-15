@@ -51,10 +51,25 @@ public class Tuple {
 	
 	
 	public boolean equals(Object other){
-		return false;
+		if( !(other instanceof Tuple)) return false;
+		Tuple tuple = (Tuple) other;
+		//check sizes
+		if(this.size != tuple.size()) return false;
+		
+		int i=0;
+		for(ValueInTuple val: this.values){
+			//check every value inside the tuples
+			if(!(val.equals(tuple.getValue(i))))
+				return false;
+			i++;
+		}
+		
+		return true; //if reaches here, the tuples are the same
+		
 	}
 	
 	public String toString(){
 		return null;
 	}
+
 }
