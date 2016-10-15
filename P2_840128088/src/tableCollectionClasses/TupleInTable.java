@@ -27,11 +27,10 @@ public class TupleInTable extends Tuple {
 		return ocurrence;
 	}
 	/**
-	 * Sets the occurrence of this.
-	 * @param ocurrence the occurrence to set
+	 * Increase the occurrence of this by one.
 	 */
-	public void setOcurrence(int ocurrence) {
-		this.ocurrence = ocurrence;
+	public void increasOcurrenceByOne() {
+		this.ocurrence++;
 	}
 	
 	

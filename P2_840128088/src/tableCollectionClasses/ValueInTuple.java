@@ -50,7 +50,7 @@ public class ValueInTuple {
 		if(!(other instanceof ValueInTuple)) return false;
 		
 		//compare values. All data types managed in this project implements the equals method.
-		//
+		//Since we are going to compare values of the same attribute we don't need to check the attributes.
 		return this.value.equals(other);
 		
 	}
