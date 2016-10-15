@@ -120,9 +120,7 @@ Steps to run from CMD:
 (1) Navigate to a workspace or directory that contains the project
     named, say, p2j.
 
-(2) Go to ~/p2j/src from the command line prompt
-
-(3) From there execute the JVM by typing 
+(2) From there execute the JVM by typing 
 	java -classpath bin p2MainClasses.DataFilePopulator fname
 	
 	where fname is the name of any file (existing or not) that you
@@ -130,7 +128,7 @@ Steps to run from CMD:
 	project specifications for a valid file, then the program 
 	will end with an appropriate message. 
 
-(4) Another option is to type
+(3) Another option is to type
 	java -classpath bin p2MainClasses.DataFilePopulator fname < textfile
 	
 	if fname does not exist and textfile is a text file containing all the
@@ -139,7 +137,7 @@ Steps to run from CMD:
 	named fname. 
 	
 	
-(5) The same concept (steps 2 to 4) applies for the execution of
+(4) The same concept (steps 1 to 3) applies for the execution of
 	 ~/p2MainClasses/TableAnalyzer.java
   
 	
