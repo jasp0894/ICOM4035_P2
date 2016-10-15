@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import dataManagementClasses.AttributeInSchema;
 import dataManagementClasses.TableSchema;
+import generalUtilities.DataUtils;
 
 /**
  * This class is the central data type in this project. It contains a table schema that specifies the
@@ -132,6 +133,35 @@ public class Table {
 	 */
 	public TableSchema getTableSchema(){
 		return this.ts;
+	}
+	
+	
+	/**
+	 * Show a table containing the summary of all attributes with their respective data types and columns that they
+	 * belong to.
+	 */
+	public void showAttributeSummaryTable(){
+		String s = "|"; 
+	
+		//construct table header
+		s += String.format(DataUtils.STRINGFORMAT, "Attribute Name");
+		s += String.format(DataUtils.STRINGFORMAT, "Data Type");
+		s += String.format(DataUtils.STRINGFORMAT, "Column") +" |";
+		s += "\n"; 
+		
+		for (int i=0; i<= 3* DataUtils.VALUEWIDE+2; i++) s+='='; 
+		
+		//fill table data
+		for(int i=0; i< ts.getNumberOfAttrs(); i++){
+			s+= String.format(DataUtils.STRINGFORMAT, ts.getAttr(i).getName()) +
+					String.format(DataUtils.STRINGFORMAT, DataUtils.getTypeName(ts.getAttr(i).gettIndex())) +
+					String.format(DataUtils.STRINGFORMAT, String.valueOf(i+1)) + "\n";
+					
+		}
+		
+		
+		
+		System.out.println(s);
 	}
 /*
  	public static Table readTableDataFromFile(RandomAccessFile file) throws IOException {
