@@ -65,12 +65,16 @@ public class DataFilePopulator {
 
 		if (f.exists()) {
 			try {
+				//create a raf with the created file
 				raf = new RandomAccessFile(f, "rw");
-				
+
+				//check the validity of the given file
 				this.table = DataUtils.isValidProjectFile(raf, "p"); 
+				
 				if(table ==null)
 					invalidFile=true;
 				else{
+					//file is valid. show its content.
 					table.displayTable();
 				}
 				
@@ -83,12 +87,15 @@ public class DataFilePopulator {
 		
 		//Check if file was valid or not
 		if (!invalidFile) {
-			// code to add data (records)
-			// read data for the records
+			// file was valid and this table has its content.
+			//get the table schema of this table 
 			ts = table.getTableSchema();
+			//create a new instance of Table such that no duplication occurs in the case of a table been read.
 			this.table = new Table(ts);
+			//trigger the population for records
 			populateRecords();
 		}else{
+			//invalid file!
 			System.out.println("\n****Sorry, It seems that File " +  this.fname + " is not valid. Try again! ");
 		}
 	}
@@ -112,7 +119,7 @@ public class DataFilePopulator {
 		System.out.print("----File " + fname + " has been created.\n");
 		System.out.print("\nDo you want to add a new attribute? Y_/N_");
 		while (moreAtrributesToAdd && input.hasNextLine()) {
-			// read next line and validate it
+			// read answer and validate it
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input,"Do you want to add a new attribute?");
 
 			// if answer was affirmative
@@ -121,29 +128,30 @@ public class DataFilePopulator {
 				// read attribute name if answer was affirmative
 				attributeName = DataUtils.readAttributeNameFromInput(input);
 
-				// read data type
+				// read data type and convert it to its associated ID
 				attributeID = DataUtils.getTypeID(DataUtils.readAttributeTypeFromInput(input));
 
 				// Therefore, create a new attribute with name, attribute ID
 				// (associated to a data type) and dataoffset
 				// in the schema. The first one has 0 offset the second one
-				// has an offset equals to the size of the first one.
+				// has an offset equals to the type size of the first one, and so on.
 				attrs.add(new AttributeInSchema(attributeName, attributeID, dataOffset));
+				//data offset initially is 0
 				dataOffset += DataUtils.getTypeSize(attributeID);
 
 				// ask for another attribute again.
 				System.out.print("Do you want to add a new attribute? " + "Y_/N_");
 
 			} else {
-				// All attributes were recorded successfully. Should
-				// continue to a point
-				// where the process is the same for both (existing file or
-				// new file)
+				// All attributes were recorded successfully. 
 				System.out.println("\nThank you! All Attributes have been recorded.\n");
 				moreAtrributesToAdd = false;
+				//create a table schema with list of attributes.
 				ts = TableSchema.getSubschema(attrs);
+				//create a new Table with the created table schema.
 				this.table = new Table(ts);
 				try {
+					//save the schema to the file
 					ts.saveSchema(raf);
 				} catch (IllegalStateException | IOException e) {
 					// TODO Auto-generated catch block
@@ -165,12 +173,12 @@ public class DataFilePopulator {
 		// ask if the use wants to add a new record
 		System.out.print("\nDo you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
-			// read next line and validate it
+			// read answer to question and validate it
 			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input,"Do you want to add a new record?" );
 
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {
-				// add the record to the table
+				// Request and add the record to the table
 				this.table.addRecord(DataUtils.requestDataForRecord(ts, input));
 				// ask for a new record
 				System.out.print("\nDo you want to add a new record? _Y/_N");

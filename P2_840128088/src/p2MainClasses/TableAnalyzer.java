@@ -14,8 +14,8 @@ import tableCollectionClasses.ValueInTuple;
 
 /**
  * This class has the purpose of analyzing tables contained in RAFs that comply
- * with the specifications of this project. The analysis is nothing but table
- * tuples frequency distribution.
+ * with the specifications of this project. The analysis is nothing but tables
+ * with tuples frequency distribution and percentage.
  * 
  * @author J.A. Sanchez Perez
  *
@@ -64,18 +64,21 @@ public class TableAnalyzer {
 		File f = new File("InputData" + File.separator + fname);
 
 		boolean invalidFile = false, analyzeMoreData = true;
-		;
+		
 		String answer = new String("");
 
 		// check if file exists
 		if (f.exists()) {
 
 			try {
+				//create  raf instance with the created file
 				RandomAccessFile raf = new RandomAccessFile(f, "r");
 
+				//check the validity of the given file.
 				table = DataUtils.isValidProjectFile(raf, "a");
 
 				if (table == null)
+					//file was not valid
 					invalidFile = true;
 				else {
 					// file is valid
@@ -88,7 +91,7 @@ public class TableAnalyzer {
 					// Ask for analyze data
 					System.out.print("\nDo you want to analyze data from " + fname + "? Y_/N_");
 					while (analyzeMoreData && input.hasNextLine()) {
-						// read next line and validate it
+						// read answer to the question and validate it. Will keep asking if not valid.
 						answer = DataUtils.getAndValidateAnswerToQuestionFrom(input,
 								"Do you want to analyze data from " + fname + "? ");
 
@@ -97,6 +100,8 @@ public class TableAnalyzer {
 							// request the attributes to be analyzed. By their
 							// columns as shown in the small table.
 							this.attributesToanalyze = requestAttributesToAnalyze(input);
+							
+							//check the size of the list of attributes to analyze
 							if (attributesToanalyze.size() == 0) {
 								System.out.println("No Attributes were selected to be analyzed...");
 							} else {
@@ -167,12 +172,14 @@ public class TableAnalyzer {
 					}
 
 				} else {
+					//check if the given attribute had been already chosen 
 					boolean inList = false;
 					for (int i = 0; i < list.size() && !inList; i++)
 						if (list.get(i).equals(n))
 							inList = true;
 
 					if (!inList)
+						//if not repeated, then add it to the list
 						list.add(n);
 					else
 						System.out.println(
@@ -202,12 +209,12 @@ public class TableAnalyzer {
 
 		// iterate over each record in this table
 		for (int i = 0; i < table.getNumberOfRecords(); i++) {
-			// create a new TupleInTable to hold this new Tuple.
+			// create a new TupleInTable to hold the current new Tuple.
 			TupleInTable tup = new TupleInTable();
 
-			// for each attribute of interest in this record:
+			// for each attribute of interest (inside list of attributes to analyze):
 			for (int j = 0; j < attributesToanalyze.size(); j++) {
-				// Get the attribute at the given column in this Table.
+				// Get the attribute at the given column in this Table (by the user).
 				// The column is inside the list of attributes to analyze
 				// (filled after requesting values from the user)
 				// and we need to subtract 1 from it, since the columns are in
@@ -216,7 +223,7 @@ public class TableAnalyzer {
 				int attrPosition = attributesToanalyze.get(j) - 1;
 				AttributeInSchema attr = table.getAttribute(attrPosition);
 
-				// get the value of this attribute for the current record.
+				// get the value of this attribute inside the current record.
 				Object value = table.getRecord(i).readData(attrPosition);
 
 				// create a new ValueInTuple
@@ -225,7 +232,8 @@ public class TableAnalyzer {
 				// add the current ValueInTuple to the current tuple.
 				tup.addValue(val);
 			}
-			// at this point we have a tuple of values.
+			// at this point we have a valid tuple of values. But, we don't know if it is already in list or not.
+			
 			// check occurrences
 			boolean inList = false;
 			// initialized outside the loop to be able to access the element in
@@ -236,8 +244,9 @@ public class TableAnalyzer {
 					inList = true;
 
 			if (inList) {
+				//get the repeated tuple. Accessed by means of k
 				TupleInTable repeatedTuple = tuples.get(k - 1);
-				// increase the occurrence of the tuple found to be repeated
+				// increase the occurrence of the tuple
 				repeatedTuple.increasOcurrenceByOne();
 
 				// set the partial percentage of appearance of this tuple in
@@ -246,9 +255,7 @@ public class TableAnalyzer {
 						(((double) repeatedTuple.getOcurrence() / (double) table.getNumberOfRecords()) * 100));
 
 			} else {
-				// we can add it to the list of tuples and then check if it had
-				// been
-				// added before.
+				//the current tuple is not in list, so we can add it.
 				tuples.add(tup);
 
 				// set the partial percentage of appearance of this tuple in
@@ -281,6 +288,8 @@ public class TableAnalyzer {
 			s += '=';
 
 		s += "\n";
+		
+		//iterate over the list of tuple
 		for (int i = 0; i < tuples.size(); i++) {
 			// show the values of the current tuple
 			TupleInTable currentTuple = tuples.get(i);
