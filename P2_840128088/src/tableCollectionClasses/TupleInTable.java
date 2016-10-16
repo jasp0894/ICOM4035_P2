@@ -4,7 +4,7 @@
 package tableCollectionClasses;
 
 /**
- * An object of this is a specialized version of Tuple which now holds the occurrence of this tuple in Table.
+ * An object of this is a specialized version of Tuple which now holds the occurrence of this tuple in Table and its percentage.
  * @author J.A. Sanchez Perez
  *
  */
@@ -19,6 +19,7 @@ public class TupleInTable extends Tuple {
 		// TODO Auto-generated constructor stub
 		super();
 		this.ocurrence=1;
+		this.percentageInTable=0;
 	}
 	
 	/**
