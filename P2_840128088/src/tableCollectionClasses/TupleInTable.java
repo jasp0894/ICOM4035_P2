@@ -11,6 +11,7 @@ package tableCollectionClasses;
 public class TupleInTable extends Tuple {
 
 	private int ocurrence;
+	private double percentageInTable;
 	/**
 	 * Creates a new instance of this.
 	 */
@@ -19,12 +20,29 @@ public class TupleInTable extends Tuple {
 		super();
 		this.ocurrence=1;
 	}
+	
 	/**
 	 * Get the occurrence of this.
 	 * @return the occurrence
 	 */
 	public int getOcurrence() {
 		return ocurrence;
+	}
+	
+	/**
+	 * Sets the percentage in table of this.
+	 * @param perc the percentage
+	 */
+	public void setPercentage(double perc){
+		this.percentageInTable = perc;
+	}
+	
+	/**
+	 * Gets the percentage in table of this.
+	 * @return percentage.
+	 */
+	public double getPercentageInTable(){
+		return this.percentageInTable;
 	}
 	/**
 	 * Increase the occurrence of this by one.

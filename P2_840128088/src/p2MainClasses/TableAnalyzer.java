@@ -9,7 +9,6 @@ import java.util.Scanner;
 import dataManagementClasses.AttributeInSchema;
 import generalUtilities.DataUtils;
 import tableCollectionClasses.Table;
-import tableCollectionClasses.Tuple;
 import tableCollectionClasses.TupleInTable;
 import tableCollectionClasses.ValueInTuple;
 
@@ -221,7 +220,6 @@ public class TableAnalyzer {
 				tup.addValue(val);
 			}
 			// at this point we have a tuple of values.
-
 			// check occurrence.
 			boolean inList = false;
 			// initialized outside the loop to be able to access the element in
@@ -231,13 +229,24 @@ public class TableAnalyzer {
 				if (tuples.get(k).equals(tup))
 					inList = true;
 
-			if (inList)
+			if (inList){
+				TupleInTable repeatedTuple = tuples.get(k-1);
 				// increase the occurrence of the tuple found to be repeated
-				tuples.get(k-1).increasOcurrenceByOne();
-			else
+				repeatedTuple.increasOcurrenceByOne();
+				
+				//set the partial percentage of appearance of this tuple in table.
+				
+				repeatedTuple.setPercentage((((double)repeatedTuple.getOcurrence()/(double)table.getNumberOfRecords())*100));
+			
+			}else{
 				// we can add it to the list of tuples and then check if it had been
 				// added before.
 				tuples.add(tup);
+				
+				//set the partial percentage of appearance of this tuple in table.
+				tup.setPercentage((((double)tup.getOcurrence()/(double)table.getNumberOfRecords())*100));
+			}
+			
 			
 
 		}
@@ -275,6 +284,9 @@ public class TableAnalyzer {
 			}
 			// show the occurrence of the current tuple
 			s += String.format(DataUtils.INTEGERFORMAT, currentTuple.getOcurrence());
+			
+			//show the percentage of the current tuple
+			s += String.format(DataUtils.FLOATFORMAT, currentTuple.getPercentageInTable());
 			s += "\n";
 		}
 
