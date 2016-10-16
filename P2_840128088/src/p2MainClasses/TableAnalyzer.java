@@ -97,13 +97,16 @@ public class TableAnalyzer {
 							// request the attributes to be analyzed. By their
 							// columns as shown in the small table.
 							this.attributesToanalyze = requestAttributesToAnalyze(input);
+							if (attributesToanalyze.size() == 0) {
+								System.out.println("No Attributes were selected to be analyzed...");
+							} else {
 
-							// analyze the attributes specified by the user.
-							analyzeAttributes();
-							
-							//show results of analysis
-							showAnalysisResultsTable();
+								// analyze the attributes specified by the user.
+								analyzeAttributes();
 
+								// show results of analysis
+								showAnalysisResultsTable();
+							}
 						} else {
 							// answer was negative
 							System.out.println("\nThanks for using Table Analyzer!");
@@ -229,26 +232,26 @@ public class TableAnalyzer {
 				if (tuples.get(k).equals(tup))
 					inList = true;
 
-			if (inList){
-				TupleInTable repeatedTuple = tuples.get(k-1);
+			if (inList) {
+				TupleInTable repeatedTuple = tuples.get(k - 1);
 				// increase the occurrence of the tuple found to be repeated
 				repeatedTuple.increasOcurrenceByOne();
-				
-				//set the partial percentage of appearance of this tuple in table.
-				
-				repeatedTuple.setPercentage((((double)repeatedTuple.getOcurrence()/(double)table.getNumberOfRecords())*100));
-			
-			}else{
-				// we can add it to the list of tuples and then check if it had been
+
+				// set the partial percentage of appearance of this tuple in
+				// table.
+				repeatedTuple.setPercentage(
+						(((double) repeatedTuple.getOcurrence() / (double) table.getNumberOfRecords()) * 100));
+
+			} else {
+				// we can add it to the list of tuples and then check if it had
+				// been
 				// added before.
 				tuples.add(tup);
-				
-				//set the partial percentage of appearance of this tuple in table.
-				tup.setPercentage((((double)tup.getOcurrence()/(double)table.getNumberOfRecords())*100));
-			}
-			
-			
 
+				// set the partial percentage of appearance of this tuple in
+				// table.
+				tup.setPercentage((((double) tup.getOcurrence() / (double) table.getNumberOfRecords()) * 100));
+			}
 		}
 	}
 
@@ -284,8 +287,8 @@ public class TableAnalyzer {
 			}
 			// show the occurrence of the current tuple
 			s += String.format(DataUtils.INTEGERFORMAT, currentTuple.getOcurrence());
-			
-			//show the percentage of the current tuple
+
+			// show the percentage of the current tuple
 			s += String.format(DataUtils.FLOATFORMAT, currentTuple.getPercentageInTable());
 			s += "\n";
 		}
