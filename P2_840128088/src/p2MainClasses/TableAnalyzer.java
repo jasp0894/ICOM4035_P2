@@ -96,6 +96,10 @@ public class TableAnalyzer {
 							//request the attributes to be analyzed. By their columns as shown in the small table.
 							this.attributesToanalyze = requestAttributesToAnalyze(input);
 							
+							//analyze the attributes specified by the user.
+							analyzeAttributes();
+							
+							
 						} else {
 							// answer was negative
 							System.out.println("\nThanks for using Table Analyzer!");
@@ -193,14 +197,14 @@ public class TableAnalyzer {
 			//for each attribute of interest in this record:
 			for(int j=0; j<attributesToanalyze.size();j++){
 				//Get the attribute at the given column in this Table.
-				//The column is inside the list of attributes to analyze and 
-				//we need to subtract 1 from it, since the columns are in the range
+				//The column is inside the list of attributes to analyze (filled after requesting values from the user) 
+				//and we need to subtract 1 from it, since the columns are in the range
 				//1->n and the actual positions are from 0 to n-1
 				int attrPosition = attributesToanalyze.get(j)-1;
 				AttributeInSchema attr = table.getAttribute(attrPosition);
 				
 				//get the value of this attribute for the current record. 
-				Object value = table.getRecord(attrPosition).readData(attrPosition);
+				Object value = table.getRecord(i).readData(attrPosition);
 				
 				//create a new ValueInTuple
 				ValueInTuple val = new ValueInTuple(attr, value);
@@ -229,5 +233,11 @@ public class TableAnalyzer {
 			}
 			
 		}
+	}
+	
+	private void showAnalysisResults(){
+		System.out.println("\nAnalysis results: \n");
+		
+		
 	}
 }
