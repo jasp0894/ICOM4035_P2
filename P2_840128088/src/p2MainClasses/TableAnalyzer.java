@@ -33,6 +33,7 @@ public class TableAnalyzer {
 		Scanner in = new Scanner(System.in);
 
 		TableAnalyzer analyzer = new TableAnalyzer(args[0], in);
+		
 		analyzer.analyze();
 
 	}
@@ -193,6 +194,9 @@ public class TableAnalyzer {
 
 	}
 
+	/**
+	 * Analyze the attributes chosen by the user.
+	 */
 	private void analyzeAttributes() {
 		// initialize the list of tuples.
 		tuples = new ArrayList<>();
@@ -255,6 +259,9 @@ public class TableAnalyzer {
 		}
 	}
 
+	/**
+	 * Show the results of the analysis in the form of a table.
+	 */
 	private void showAnalysisResultsTable() {
 		System.out.println("\nAnalysis results: \n");
 
