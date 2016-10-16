@@ -113,7 +113,7 @@ public class DataFilePopulator {
 		System.out.print("\nDo you want to add a new attribute? Y_/N_");
 		while (moreAtrributesToAdd && input.hasNextLine()) {
 			// read next line and validate it
-			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
+			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input,"Do you want to add a new attribute?");
 
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {
@@ -166,7 +166,7 @@ public class DataFilePopulator {
 		System.out.print("\nDo you want to add a new record? _Y/_N");
 		while (moreRecordsToAdd && input.hasNextLine()) {
 			// read next line and validate it
-			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
+			answer = DataUtils.getAndValidateAnswerToQuestionFrom(input,"Do you want to add a new record?" );
 
 			// if answer was affirmative
 			if (answer.equalsIgnoreCase("y")) {

@@ -85,7 +85,7 @@ public class TableAnalyzer {
 					System.out.print("\nDo you want to analyze data from " + fname + "? Y_/N_");
 					while (analyzeMoreData && input.hasNextLine()) {
 						// read next line and validate it
-						answer = DataUtils.getAndValidateAnswerToQuestionFrom(input);
+						answer = DataUtils.getAndValidateAnswerToQuestionFrom(input, "Do you want to analyze data from " + fname + "? ");
 
 						// if answer was affirmative
 						if (answer.equalsIgnoreCase("y")) {
@@ -95,12 +95,17 @@ public class TableAnalyzer {
 							
 						} else {
 							// answer was negative
-							System.out.println("Thanks for using Table Analyzer!");
+							System.out.println("\nThanks for using Table Analyzer!");
 							analyzeMoreData = false;
 						}
 
-					}
 
+						if(analyzeMoreData)
+						System.out.print("\nDo you want to analyze data from " + fname + "? Y_/N_");
+
+					}
+					
+					
 				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -122,7 +127,7 @@ public class TableAnalyzer {
 		ArrayList<Integer> list = new ArrayList<>();
 
 		// ask the first time to make the user type in console.
-		System.out.println("Next Attribute Index: ");
+		System.out.print("Next Attribute Index: ");
 		while (moreAttributes && in.hasNextLine()) {
 			// read answer
 			answer = in.nextLine();
@@ -132,13 +137,16 @@ public class TableAnalyzer {
 				int n = Integer.parseInt(answer);
 				// n has the integer answer.
 				if (n < 1 || n > table.getNumberOfAttrs()) {
-					System.out.println(
-							"\n****Invalid answer. Valid numbers are from 1 to " + table.getNumberOfAttrs() + "\n");
+					
+					if (n < 0) {
+						System.out.println("\nAll attributes to analyze have been recorded. The analysis will start...\n");
+						moreAttributes = false;
+					}else{
+						System.out.println(
+								"\n****Invalid answer. Valid numbers are from 1 to " + table.getNumberOfAttrs() + "\n");
+					}
 
-				} else if (n < 0) {
-					System.out.println("All attributes to analyze have been recorded. The analysis will start...\n");
-					moreAttributes = false;
-				} else {
+				}else {
 					boolean inList = false;
 					for (int i = 0; i < list.size() && !inList; i++)
 						if (list.get(i).equals(n))
@@ -158,7 +166,7 @@ public class TableAnalyzer {
 
 			// ask for the next attribute to add.
 			if (moreAttributes)
-				System.out.println("Next Attribute Index: ");
+				System.out.print("Next Attribute Index: ");
 		}
 		
 		return list;

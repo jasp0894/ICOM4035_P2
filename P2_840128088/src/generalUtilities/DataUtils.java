@@ -233,11 +233,11 @@ public class DataUtils {
 	 *            the scanner
 	 * @return the answer.
 	 */
-	public static String getAndValidateAnswerToQuestionFrom(Scanner input) {
+	public static String getAndValidateAnswerToQuestionFrom(Scanner input, String question) {
 		String answer = input.nextLine();
 
 		while (!(answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("n"))) {
-			System.out.print("\n****Incorrect answer. Do you want to add a new attribute? Y_/N_\n");
+			System.out.print("\n****Incorrect answer."+question+" Y_/N_\n");
 
 			// read answer again
 			answer = input.nextLine();
