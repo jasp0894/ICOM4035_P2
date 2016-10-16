@@ -17,7 +17,7 @@ public class TupleInTable extends Tuple {
 	public TupleInTable() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.ocurrence=0;
+		this.ocurrence=1;
 	}
 	/**
 	 * Get the occurrence of this.

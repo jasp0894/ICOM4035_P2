@@ -29,6 +29,7 @@ public class Tuple {
 	 */
 	public void addValue(ValueInTuple value){
 		values.add(value);
+		size++;
 	}
 	
 	/**
@@ -68,8 +69,6 @@ public class Tuple {
 		
 	}
 	
-	public String toString(){
-		return null;
-	}
+	
 
 }
