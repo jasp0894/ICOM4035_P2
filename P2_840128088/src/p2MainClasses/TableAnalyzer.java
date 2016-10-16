@@ -9,6 +9,8 @@ import java.util.Scanner;
 import dataManagementClasses.AttributeInSchema;
 import generalUtilities.DataUtils;
 import tableCollectionClasses.Table;
+import tableCollectionClasses.TupleInTable;
+import tableCollectionClasses.ValueInTuple;
 
 /**
  * This class has the purpose of analyzing tables contained in RAFs that comply
@@ -24,6 +26,7 @@ public class TableAnalyzer {
 	private Scanner input;
 	private Table table;
 	private ArrayList<Integer> attributesToanalyze;
+	private ArrayList<TupleInTable> tuples;
 
 	public static void main(String[] args) {
 
@@ -121,6 +124,11 @@ public class TableAnalyzer {
 			System.out.println("Sorry, " + fname + " is not a valid file to analyze. Try again with another file.");
 	}
 
+	/**
+	 * Request the attributes to analyze from the user.
+	 * @param in the Scanner input source.
+	 * @return a list containing the indexes of the attributes to analyze.
+	 */
 	private ArrayList<Integer> requestAttributesToAnalyze(Scanner in) {
 		String answer;
 		boolean moreAttributes = true;
@@ -171,5 +179,55 @@ public class TableAnalyzer {
 		
 		return list;
 
+	}
+	
+	private void analyzeAttributes(){
+		//initialize the list of tuples.
+		tuples = new ArrayList<>();
+		
+		//iterate over each record in this table
+		for(int i=0; i<table.getNumberOfRecords();i++){
+			//create a new TupleInTable to hold this new Tuple.
+			TupleInTable tup = new TupleInTable();
+			
+			//for each attribute of interest in this record:
+			for(int j=0; j<attributesToanalyze.size();j++){
+				//Get the attribute at the given column in this Table.
+				//The column is inside the list of attributes to analyze and 
+				//we need to subtract 1 from it, since the columns are in the range
+				//1->n and the actual positions are from 0 to n-1
+				int attrPosition = attributesToanalyze.get(j)-1;
+				AttributeInSchema attr = table.getAttribute(attrPosition);
+				
+				//get the value of this attribute for the current record. 
+				Object value = table.getRecord(attrPosition).readData(attrPosition);
+				
+				//create a new ValueInTuple
+				ValueInTuple val = new ValueInTuple(attr, value);
+				
+				//add the current ValueInTuple to the current tuple.
+				tup.addValue(val);
+			}
+			//at this point we have a tuple of values.
+			//we can add it to the list of tuples and then check if it had been added before.
+			tuples.add(tup);
+			
+			//check occurrence.
+			boolean inList = false;
+			//initialized outside the loop to be able to access the element in list if the loop is interrupted
+			int k = 0;
+			for (; k < tuples.size() && !inList; k++)
+				if (tuples.get(i).equals(tup))
+					inList = true;
+			
+			if(inList){
+				//increase the occurrence of the tuple found to be repeated
+				tuples.get(k).increasOcurrenceByOne();
+				
+				//remove the repeated tuple at the end of the list. It was just added.
+				tuples.remove(tuples.size()-1);
+			}
+			
+		}
 	}
 }

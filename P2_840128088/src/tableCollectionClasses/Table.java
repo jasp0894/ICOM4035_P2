@@ -47,6 +47,13 @@ public class Table {
 	}
 	
 	/**
+	 * Get the number of records of this table.
+	 * @return the number of records.
+	 */
+	public int getNumberOfRecords(){
+		return rList.size();
+	}
+	/**
 	 * Creates a new instance of Record. The instance is initialized with this table schema.
 	 * @return the newly create object of Record.
 	 */
