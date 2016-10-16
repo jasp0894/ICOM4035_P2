@@ -22,6 +22,8 @@ public class TableAnalyzer {
 
 	private String fname;
 	private Scanner input;
+	private Table table;
+	private ArrayList<Integer> attributesToanalyze;
 
 	public static void main(String[] args) {
 
@@ -57,26 +59,27 @@ public class TableAnalyzer {
 		// create new File object
 		File f = new File("InputData" + File.separator + fname);
 
-		boolean invalidFile = false, analyzeMoreData = true;;
+		boolean invalidFile = false, analyzeMoreData = true;
+		;
 		String answer = new String("");
-		
+
 		// check if file exists
 		if (f.exists()) {
 
 			try {
 				RandomAccessFile raf = new RandomAccessFile(f, "r");
 
-				Table t = DataUtils.isValidProjectFile(raf, "a");
+				table = DataUtils.isValidProjectFile(raf, "a");
 
-				if (t == null)
+				if (table == null)
 					invalidFile = true;
 				else {
 					// file is valid
 
 					// show table content and attributes summary table
-					t.displayTable();
+					table.displayTable();
 					System.out.println("\n");
-					t.showAttributeSummaryTable();
+					table.showAttributeSummaryTable();
 
 					// Ask for analyze data
 					System.out.print("\nDo you want to analyze data from " + fname + "? Y_/N_");
@@ -86,15 +89,16 @@ public class TableAnalyzer {
 
 						// if answer was affirmative
 						if (answer.equalsIgnoreCase("y")) {
-
 							
+							//request the attributes to be analyzed. By their columns as shown in the small table.
+							this.attributesToanalyze = requestAttributesToAnalyze(input);
 							
 						} else {
 							// answer was negative
 							System.out.println("Thanks for using Table Analyzer!");
 							analyzeMoreData = false;
 						}
-						
+
 					}
 
 				}
@@ -111,9 +115,53 @@ public class TableAnalyzer {
 		if (invalidFile)
 			System.out.println("Sorry, " + fname + " is not a valid file to analyze. Try again with another file.");
 	}
-	
-	private ArrayList<AttributeInSchema> requestAttributesToAnalyze(Scanner in){
-		return null;
+
+	private ArrayList<Integer> requestAttributesToAnalyze(Scanner in) {
+		String answer;
+		boolean moreAttributes = true;
+		ArrayList<Integer> list = new ArrayList<>();
+
+		// ask the first time to make the user type in console.
+		System.out.println("Next Attribute Index: ");
+		while (moreAttributes && in.hasNextLine()) {
+			// read answer
+			answer = in.nextLine();
+
+			// try to parse the input to an integer
+			try {
+				int n = Integer.parseInt(answer);
+				// n has the integer answer.
+				if (n < 1 || n > table.getNumberOfAttrs()) {
+					System.out.println(
+							"\n****Invalid answer. Valid numbers are from 1 to " + table.getNumberOfAttrs() + "\n");
+
+				} else if (n < 0) {
+					System.out.println("All attributes to analyze have been recorded. The analysis will start...\n");
+					moreAttributes = false;
+				} else {
+					boolean inList = false;
+					for (int i = 0; i < list.size() && !inList; i++)
+						if (list.get(i).equals(n))
+							inList = true;
+
+					if (!inList)
+						list.add(n);
+					else
+						System.out.println(
+								"\n****The attribute has been already selected. Choose a different attribute to analyze.\n");
+
+				}
+			} catch (NumberFormatException e) {
+				// failed to parse. The given number is not a valid int.
+				System.out.println("\n****Invalid answer. Type a valid integer number\n");
+			}
+
+			// ask for the next attribute to add.
+			if (moreAttributes)
+				System.out.println("Next Attribute Index: ");
+		}
 		
+		return list;
+
 	}
 }
