@@ -3,7 +3,7 @@
 Author: Jesus Antonio Sanchez Perez
 File: ICOM4035 Data Structures
 Version: 2.0
-Phase: 1.0
+Phase: 2.0
 SN: 840-12-8088
 
 *****************************************************************
@@ -15,7 +15,8 @@ actually represents a table. The population action is done in
 either two ways: by reading the content from a valid file and 
 request the user to enter data or starting with an empty file 
 and request the user to enter all the data. Finally, the data 
-is analyzed to determine some characteristics of it.
+is analyzed to determine the frequency and percentage of 
+its tuples.
 
 The project is a Java coded project which consists of 5 packages. 
 The package named p2MainClasses contain the two main classes of the 
@@ -79,6 +80,9 @@ P2_4035_840128088_161/P2_840128088      contains all project's contents
     					data type as per the specifications of the project.  
           ~/Record.java
           ~/Table.java
+          ~/Tuple.java
+          ~/TupleInTable.java
+          ~/ValueInTuple.java
           
 
     ~/inputData				Contains text files to read from or write to.
@@ -123,7 +127,7 @@ Steps to run from CMD:
 (2) From there execute the JVM by typing 
 	java -classpath bin p2MainClasses.DataFilePopulator fname
 	
-	where fname is the name of any file (existing or not) that you
+	where fname is the name of any binary file (existing or not) that you
 	are going to work on. If exists and does not comply with the
 	project specifications for a valid file, then the program 
 	will end with an appropriate message. 
@@ -137,7 +141,7 @@ Steps to run from CMD:
 	named fname. 
 	
 	
-(4) The same concept (steps 1 to 3) applies for the execution of
+(4) A similar concept (steps 1 to 2) applies for the execution of
 	 ~/p2MainClasses/TableAnalyzer.java
   
 	

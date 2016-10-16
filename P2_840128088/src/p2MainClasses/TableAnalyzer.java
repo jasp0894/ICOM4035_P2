@@ -94,7 +94,6 @@ public class TableAnalyzer {
 
 						// if answer was affirmative
 						if (answer.equalsIgnoreCase("y")) {
-
 							// request the attributes to be analyzed. By their
 							// columns as shown in the small table.
 							this.attributesToanalyze = requestAttributesToAnalyze(input);
@@ -227,7 +226,7 @@ public class TableAnalyzer {
 				tup.addValue(val);
 			}
 			// at this point we have a tuple of values.
-			// check occurrence.
+			// check occurrences
 			boolean inList = false;
 			// initialized outside the loop to be able to access the element in
 			// list if the loop is interrupted
